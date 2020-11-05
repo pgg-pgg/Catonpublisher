@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingRight="20dp">
+
+        <EditText
+            android:id="@+id/edit_danmu"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edit_shape_raidus"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:lines="1"
+            android:padding="8dp"
+            android:textColor="@color/normal_text_color"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_danmu_content_title"
+            tools:ignore="LabelFor" />
+
+        <RadioGroup
+            android:id="@+id/rg_count_down"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_count_down_title">
+
+            <RadioButton
+                android:id="@+id/rb_0s"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="@string/text_0s"
+                android:textColor="@color/normal_text_color" />
+
+            <RadioButton
+                android:id="@+id/rb_3s"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/text_3s"
+                android:textColor="@color/normal_text_color" />
+
+            <RadioButton
+                android:id="@+id/rb_5s"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/text_5s"
+                android:textColor="@color/normal_text_color" />
+
+            <RadioButton
+                android:id="@+id/rb_10s"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/text_10s"
+                android:textColor="@color/normal_text_color" />
+        </RadioGroup>
+
+        <RadioGroup
+            android:id="@+id/rg_cover"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_cover_title">
+
+            <RadioButton
+                android:id="@+id/rb_cover_black"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="@string/text_black"
+                android:textColor="@color/normal_text_color" />
+
+            <RadioButton
+                android:id="@+id/rb_cover_gray"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/text_gray"
+                android:textColor="@color/normal_text_color" />
+
+            <RadioButton
+                android:id="@+id/rb_cover_white"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/text_white"
+                android:textColor="@color/normal_text_color" />
+
+            <RadioButton
+                android:id="@+id/rb_cover_own"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/text_own"
+                android:textColor="@color/normal_text_color" />
+        </RadioGroup>
+
+        <RadioGroup
+            android:id="@+id/rg_show_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_show_time_title">
+
+            <RadioButton
+                android:id="@+id/rb_show_time_yes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="@string/yes"
+                android:textColor="@color/normal_text_color" />
+
+            <RadioButton
+                android:id="@+id/rb_show_time_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:text="@string/no"
+                android:textColor="@color/normal_text_color" />
+        </RadioGroup>
+
+        <RadioGroup
+            android:id="@+id/rg_show_danmu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_show_danmu_title">
+
+            <RadioButton
+                android:id="@+id/rb_show_danmu_yes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="@string/yes"
+                android:textColor="@color/normal_text_color" />
+
+            <RadioButton
+                android:id="@+id/rb_show_danmu_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:text="@string/no"
+                android:textColor="@color/normal_text_color" />
+        </RadioGroup>
+
+        <ImageView
+            android:id="@+id/select_image"
+            android:layout_gravity="center"
+            android:layout_centerInParent="true"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rg_cover"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:visibility="gone"
+            android:background="@color/live_danmu_text_color"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/tv_cover_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/text_cover"
+            android:textColor="@color/normal_text_color"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rg_count_down" />
+
+
+        <TextView
+            android:id="@+id/tv_count_down_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/count_down_text"
+            android:textColor="@color/normal_text_color"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_show_time_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/text_show_time"
+            android:textColor="@color/normal_text_color"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rg_cover" />
+
+        <TextView
+            android:id="@+id/tv_show_danmu_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/show_danmu"
+            android:textColor="@color/normal_text_color"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rg_show_time" />
+
+        <TextView
+            android:id="@+id/tv_danmu_content_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/danmu_content"
+            android:textColor="@color/normal_text_color"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rg_show_danmu" />
+
+        <TextView
+            android:id="@+id/btn_store"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="40dp"
+            android:background="@drawable/button_shape_raidus"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/text_store"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_danmu" />
+    </android.support.constraint.ConstraintLayout>
+</android.support.v4.widget.NestedScrollView>

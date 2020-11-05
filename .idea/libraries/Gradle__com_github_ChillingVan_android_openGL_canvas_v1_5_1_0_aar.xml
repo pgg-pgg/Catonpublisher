@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.ChillingVan:android-openGL-canvas:v1.5.1.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Downloads/gradle-4.6/bin/caches/transforms-2/files-2.1/c97c7fdf57c38c601f300f77856281b8/android-openGL-canvas-v1.5.1.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/Downloads/gradle-4.6/bin/caches/transforms-2/files-2.1/c97c7fdf57c38c601f300f77856281b8/android-openGL-canvas-v1.5.1.0/res" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/Downloads/gradle-4.6/bin/caches/modules-2/files-2.1/com.github.ChillingVan/android-openGL-canvas/v1.5.1.0/2771fcfd3cd64560e8235d7f98c42f1439ab46b4/android-openGL-canvas-v1.5.1.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/Downloads/gradle-4.6/bin/caches/modules-2/files-2.1/com.github.ChillingVan/android-openGL-canvas/v1.5.1.0/7f34dc33c0e9a28b68b107bc364dd97760e0b1d2/android-openGL-canvas-v1.5.1.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

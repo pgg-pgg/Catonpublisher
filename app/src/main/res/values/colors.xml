@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="control_background">#cc4285f4</color>
+    <color name="normal_text_color">#1a1a1a</color>
+    <color name="select_text_color">#E5A155</color>
+    <color name="select_text_setting_back_color">#DAA520</color>
+    <color name="select_text_back_color">#201F1E</color>
+    <color name="live_danmu_text_color">#E4E0E1</color>
+    <color name="select_text_setting_back_grey_color">#C1C1C1</color>
+    <color name="live_image_button_back_color">#6FA62B</color>
+    <color name="white">#ffffff</color>
+    <color name="red">#ff0000</color>
+    <color name="translate">#00000000</color>
+</resources>

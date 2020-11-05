@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    tools:context="com.saisai.catonpublisher.activity.VideoActivity">
+
+    <com.saisai.catonpublisher.view.AutoFitTextureView
+        android:id="@+id/surface"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <LinearLayout
+        android:id="@+id/layout_debug"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_droprate"
+            android:textColor="#e21ed9"
+            android:text="dropRate:0.0%"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_bitrate"
+            android:textColor="#e21ed9"
+            android:text="bitrate:0bps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_jitter"
+            android:textColor="#e21ed9"
+            android:text="jitter:0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_rtt"
+            android:textColor="#e21ed9"
+            android:text="rtt:0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_maxdelay"
+            android:textColor="#e21ed9"
+            android:text="maxDelay:0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:layout_gravity="right"
+        android:gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageButton
+            android:id="@+id/ib_switch"
+            android:padding="4dp"
+            android:background="@drawable/ib_switchcamera_press_bg"
+            android:scaleType="fitXY"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+        <ImageButton
+            android:id="@+id/ib_flash"
+            android:background="@mipmap/flash_lamp_off_o"
+            android:padding="4dp"
+            android:layout_marginLeft="16dp"
+            android:scaleType="fitXY"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_start"
+        android:text="开始推流"
+        android:background="#66666666"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <!--<LinearLayout-->
+        <!--android:orientation="horizontal"-->
+        <!--android:layout_gravity="right|bottom"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content">-->
+        <!--<Button-->
+            <!--android:id="@+id/btn_open"-->
+            <!--android:text="打开"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
+        <!--<Button-->
+            <!--android:id="@+id/btn_close"-->
+            <!--android:text="关闭"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
+    <!--</LinearLayout>-->
+</FrameLayout>

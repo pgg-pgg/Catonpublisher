@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_enabled="true" android:drawable="@drawable/button_back_enable_shape_raidus"/>
+    <item android:state_enabled="false" android:drawable="@drawable/button_back_shape_raidus"/>
+
+    <!-- 默认样式 -->
+    <item android:drawable="@drawable/button_back_enable_shape_raidus"/>
+</selector>

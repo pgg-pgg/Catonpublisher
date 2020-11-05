@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="com.mylhyl:acp-1.2.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/acp-1.2.0.aar/6dd71f708ec74201caaa8bd29c72b02e/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/acp-1.2.0.aar/6dd71f708ec74201caaa8bd29c72b02e/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mylhyl/acp/1.2.0/3140708bdbaeddb21d544a698ef25ac660906220/acp-1.2.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

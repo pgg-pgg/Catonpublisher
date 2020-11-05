@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Catonpublisher.iml" filepath="$PROJECT_DIR$/Catonpublisher.iml" group="Catonpublisher" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="Catonpublisher/app" />
+    </modules>
+  </component>
+</project>

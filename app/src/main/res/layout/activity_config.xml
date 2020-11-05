@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#ffffff"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_height="44dp">
+        <ImageView
+            android:id="@+id/iv_back"
+            android:background="@drawable/left_back"
+            android:layout_centerVertical="true"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="20dp"
+            tools:ignore="ContentDescription" />
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_centerInParent="true"
+            android:textColor="@color/normal_text_color"
+            tools:text="添加直播"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+    <android.support.v4.widget.NestedScrollView
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rl_title"
+        app:layout_constraintBottom_toTopOf="@id/ll_control"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp"
+            tools:context="com.saisai.catonpublisher.activity.LiveConfigActivity">
+
+            <LinearLayout
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:text="@string/must_fill"
+                    android:textColor="#f00"
+                    android:textSize="12sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:textSize="16sp"
+                    android:textColor="@color/normal_text_color"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/live_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/edit_live_name"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/edit_shape_raidus"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:lines="1"
+                android:padding="8dp"
+                android:textColor="@color/normal_text_color"
+                tools:ignore="LabelFor" />
+
+            <LinearLayout
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:text="@string/must_fill"
+                    android:textColor="#f00"
+                    android:textSize="12sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:textSize="16sp"
+                    android:textColor="@color/normal_text_color"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/live_net_url"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/edit_live_net"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/edit_shape_raidus"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:lines="1"
+                android:padding="8dp"
+                android:textColor="@color/normal_text_color"
+                tools:ignore="LabelFor" />
+
+            <LinearLayout
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:text="@string/must_fill"
+                    android:textColor="#f00"
+                    android:textSize="12sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:textSize="16sp"
+                    android:textColor="@color/normal_text_color"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/live_port"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/edit_live_port"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/edit_shape_raidus"
+                android:importantForAutofill="no"
+                android:inputType="number"
+                android:lines="1"
+                android:padding="8dp"
+                android:textColor="@color/normal_text_color"
+                tools:ignore="LabelFor" />
+
+            <LinearLayout
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:text="@string/must_fill"
+                    android:textColor="#f00"
+                    android:textSize="12sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:textSize="16sp"
+                    android:textColor="@color/normal_text_color"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/live_mbps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/edit_live_mbps"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/edit_shape_raidus"
+                android:importantForAutofill="no"
+                android:inputType="number"
+                android:lines="1"
+                android:padding="8dp"
+                android:textColor="@color/normal_text_color"
+                tools:ignore="LabelFor" />
+
+            <LinearLayout
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:ignore="DisableBaselineAlignment">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_weight="5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:textSize="16sp"
+                        android:textColor="@color/normal_text_color"
+                        android:text="@string/live_secret_key"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <EditText
+                        android:id="@+id/edit_live_secret_key"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/edit_shape_raidus"
+                        android:importantForAutofill="no"
+                        android:inputType="text"
+                        android:lines="1"
+                        android:padding="8dp"
+                        android:textColor="@color/normal_text_color"
+                        tools:ignore="LabelFor" />
+
+                    <TextView
+                        android:textSize="16sp"
+                        android:layout_marginTop="8dp"
+                        android:textColor="@color/normal_text_color"
+                        android:text="@string/live_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <EditText
+                        android:id="@+id/edit_live_desc"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/edit_shape_raidus"
+                        android:importantForAutofill="no"
+                        android:inputType="text"
+                        android:lines="1"
+                        android:padding="8dp"
+                        android:textColor="@color/normal_text_color"
+                        tools:ignore="LabelFor" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:orientation="vertical"
+                    android:layout_weight="3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:textSize="16sp"
+                        android:textColor="@color/normal_text_color"
+                        android:text="@string/text_own"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/select_image"
+                        android:layout_gravity="center"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/camera"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"/>
+                </RelativeLayout>
+            </LinearLayout>
+
+
+            <CheckBox
+                android:id="@+id/cb_debug"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="12dp"
+                android:checked="true"
+                android:text="@string/show_debug" />
+
+            <TextView
+                android:textSize="16sp"
+                android:textColor="@color/normal_text_color"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/text_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <RadioGroup
+                android:id="@+id/rg_videocodec"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_avc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/text_avc" />
+
+                <RadioButton
+                    android:id="@+id/rb_hevc"
+                    android:layout_marginStart="40dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_hevc" />
+            </RadioGroup>
+
+            <TextView
+                android:textSize="16sp"
+                android:textColor="@color/normal_text_color"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/live_push_stream"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <RadioGroup
+                android:id="@+id/rg_resolution"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_480p"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/text_480p" />
+
+                <RadioButton
+                    android:id="@+id/rb_720p"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_720p" />
+
+                <RadioButton
+                    android:id="@+id/rb_1080p"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_1080p" />
+
+                <RadioButton
+                    android:id="@+id/rb_2160p"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_2160p" />
+            </RadioGroup>
+
+            <TextView
+                android:textSize="16sp"
+                android:textColor="@color/normal_text_color"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/live_fps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <RadioGroup
+                android:id="@+id/rg_video_framerate"
+                android:layout_marginStart="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_video_framerate_15"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/text_15" />
+
+                <RadioButton
+                    android:id="@+id/rb_video_framerate_24"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_25" />
+
+                <RadioButton
+                    android:id="@+id/rb_video_framerate_30"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_30" />
+
+                <RadioButton
+                    android:id="@+id/rb_video_framerate_50"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_50" />
+            </RadioGroup>
+
+            <TextView
+                android:textSize="16sp"
+                android:textColor="@color/normal_text_color"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/text_audio_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <RadioGroup
+                android:id="@+id/rg_audio_bitrate"
+                android:layout_marginStart="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_audio_bitrate_64"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/text_64" />
+
+                <RadioButton
+                    android:id="@+id/rb_audio_bitrate_128"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:text="@string/text_128" />
+            </RadioGroup>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+    <LinearLayout
+        android:id="@+id/ll_control"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@color/ip_color_press"
+        android:padding="20dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/btn_back"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_normal_shape_raidus"
+            android:gravity="center"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:text="@string/text_back"
+            android:textColor="#ffffff"
+            android:textSize="16sp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_danmu" />
+
+        <TextView
+            android:id="@+id/btn_store"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_shape_raidus"
+            android:gravity="center"
+            android:paddingTop="6dp"
+            android:layout_marginStart="10dp"
+            android:paddingBottom="6dp"
+            android:text="@string/text_store"
+            android:textColor="#ffffff"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_danmu" />
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
