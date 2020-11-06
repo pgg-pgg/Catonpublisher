@@ -94,6 +94,7 @@ public class LiveFragment extends Fragment {
                         }
                     }
                 } else {
+                    holder.mLiveTitle.setText(getActivity().getString(R.string.add_live));
                     holder.mLiveCover.setImageResource(R.drawable.icon_add_circle);
                 }
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +103,7 @@ public class LiveFragment extends Fragment {
                         if (position == 0) {
                             //跳转到配置页面
                             Intent intent = new Intent(getContext(), LiveConfigActivity.class);
-                            intent.putExtra(Constants.KEY_TITLE, "添加直播");
+                            intent.putExtra(Constants.KEY_TITLE, getActivity().getString(R.string.add_live));
                             startActivityForResult(intent, 1);
                         } else {
                             //跳转到摄像页面

@@ -1,14 +1,14 @@
 <component name="libraryTable">
   <library name="Gradle: com.mylhyl:acp:1.2.0@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/Downloads/gradle-4.6/bin/caches/transforms-2/files-2.1/d4fb98f4b076f655ea9aa0d3173e5e73/acp-1.2.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/Downloads/gradle-4.6/bin/caches/transforms-2/files-2.1/d4fb98f4b076f655ea9aa0d3173e5e73/acp-1.2.0/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/d4fb98f4b076f655ea9aa0d3173e5e73/acp-1.2.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/d4fb98f4b076f655ea9aa0d3173e5e73/acp-1.2.0/res" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://$USER_HOME$/Downloads/gradle-4.6/bin/caches/modules-2/files-2.1/com.mylhyl/acp/1.2.0/c00efb072cf8ceb70a75865d32401caa84b4aa0a/acp-1.2.0-javadoc.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mylhyl/acp/1.2.0/c00efb072cf8ceb70a75865d32401caa84b4aa0a/acp-1.2.0-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
-      <root url="jar://$USER_HOME$/Downloads/gradle-4.6/bin/caches/modules-2/files-2.1/com.mylhyl/acp/1.2.0/3140708bdbaeddb21d544a698ef25ac660906220/acp-1.2.0-sources.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mylhyl/acp/1.2.0/3140708bdbaeddb21d544a698ef25ac660906220/acp-1.2.0-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

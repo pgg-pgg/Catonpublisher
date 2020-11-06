@@ -116,7 +116,7 @@ public class Camera2Activity extends AppCompatActivity implements View.OnClickLi
                                         mBtnStart.post(new Runnable() {
                                             @Override
                                             public void run() {
-                                                Toast.makeText(Camera2Activity.this, "正在尝试连接服务器。。。", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(Camera2Activity.this, Camera2Activity.this.getString(R.string.no_connect_server), Toast.LENGTH_SHORT).show();
                                             }
                                         });
                                     }
@@ -495,7 +495,7 @@ public class Camera2Activity extends AppCompatActivity implements View.OnClickLi
                                         mBtnStart.post(new Runnable() {
                                             @Override
                                             public void run() {
-                                                Toast.makeText(Camera2Activity.this, "正在尝试连接服务器。。。", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(Camera2Activity.this, Camera2Activity.this.getString(R.string.no_connect_server), Toast.LENGTH_SHORT).show();
                                             }
                                         });
                                     }

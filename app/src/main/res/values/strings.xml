@@ -61,5 +61,12 @@
     <string name="dialog_normal_more_button_text">确认要退出么？</string>
     <string name="dialog_btn_confirm_hint_text">确认</string>
     <string name="dialog_btn_cancel_hint_text">取消</string>
+    <string name="no_connect_server">正在尝试连接服务器。。。</string>
+    <string name="add_live">添加直播</string>
+    <string name="camera_per">相机</string>
+    <string name="recording_per">录音</string>
+    <string name="warm_prompt">温馨提示</string>
+    <string name="per_camera_notice">我们需要相机权限才能正常使用该功能</string>
+    <string name="verify_permissions">验证权限</string>
 
 </resources>

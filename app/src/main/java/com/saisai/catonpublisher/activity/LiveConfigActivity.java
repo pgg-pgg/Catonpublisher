@@ -154,6 +154,17 @@ public class LiveConfigActivity extends AppCompatActivity implements View.OnClic
      * 设置数据
      */
     private void setData(NewPublisherConfig config) {
+        Map<Integer, Size> resolution = mSupportResolution.get(CameraCharacteristics.LENS_FACING_BACK);
+        findViewById(R.id.rb_2160p).setEnabled(resolution.get(NewPublisherConfig.VIDEO_RESOLUTION_2160P) != null);
+        findViewById(R.id.rb_1080p).setEnabled(resolution.get(NewPublisherConfig.VIDEO_RESOLUTION_1080P) != null);
+        findViewById(R.id.rb_720p).setEnabled(resolution.get(NewPublisherConfig.VIDEO_RESOLUTION_720P) != null);
+        findViewById(R.id.rb_480p).setEnabled(resolution.get(NewPublisherConfig.VIDEO_RESOLUTION_480P) != null);
+
+        Map<Integer, Range<Integer>> fps = mSupportFPS.get(CameraCharacteristics.LENS_FACING_BACK);
+        findViewById(R.id.rb_video_framerate_15).setEnabled(fps.get(NewPublisherConfig.VIDEO_FPS_15) != null);
+        findViewById(R.id.rb_video_framerate_24).setEnabled(fps.get(NewPublisherConfig.VIDEO_FPS_24) != null);
+        findViewById(R.id.rb_video_framerate_30).setEnabled(fps.get(NewPublisherConfig.VIDEO_FPS_30) != null);
+        findViewById(R.id.rb_video_framerate_50).setEnabled(fps.get(NewPublisherConfig.VIDEO_FPS_50) != null);
         mTvTitle.setText(config.liveTitle);
         mEditLiveName.setText(config.liveTitle);
         mEditLiveName.setSelection(config.liveTitle.length());

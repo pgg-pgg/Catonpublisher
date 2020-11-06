@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         List<NewPublisherConfig> list = SPUtils.getLiveData();
         if (list == null) {
             NewPublisherConfig config = new NewPublisherConfig();
-            config.liveTitle = "添加直播";
+            config.liveTitle = MainActivity.this.getString(R.string.add_live);
             list = new ArrayList<>();
             list.add(config);
             SPUtils.saveLiveData(list);
@@ -95,11 +95,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public void onPermissionGranted() {
                         havePermission = true;
                         if (!PermissionHelper.isCameraEnable()) {
-                            DialogUtil.showPermissionManagerDialog(MainActivity.this, "相机");
+                            DialogUtil.showPermissionManagerDialog(MainActivity.this, MainActivity.this.getString(R.string.camera_per));
                             havePermission = false;
                         }
                         if (!PermissionHelper.isAudioEnable()) {
-                            DialogUtil.showPermissionManagerDialog(MainActivity.this, "录音");
+                            DialogUtil.showPermissionManagerDialog(MainActivity.this, MainActivity.this.getString(R.string.recording_per));
                             havePermission = false;
                         }
                     }
@@ -112,22 +112,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                             for (String per : deniedPermissions) {
                                 if (per.equals(Manifest.permission.CAMERA)) {
-                                    DialogUtil.showPermissionManagerDialog(MainActivity.this, "相机");
+                                    DialogUtil.showPermissionManagerDialog(MainActivity.this, MainActivity.this.getString(R.string.camera_per));
                                     havePermission = false;
                                     continue;
                                 }
                                 if (per.equals(Manifest.permission.RECORD_AUDIO)) {
-                                    DialogUtil.showPermissionManagerDialog(MainActivity.this, "录音");
+                                    DialogUtil.showPermissionManagerDialog(MainActivity.this, MainActivity.this.getString(R.string.recording_per));
                                     havePermission = false;
                                     continue;
                                 }
                             }
 
                         } else {    // 拒绝 -> 提示此公告的意义，并可再次尝试获取权限
-                            new AlertDialog.Builder(MainActivity.this).setTitle("温馨提示")
-                                    .setMessage("我们需要相机权限才能正常使用该功能")
-                                    .setNegativeButton("取消", null)
-                                    .setPositiveButton("验证权限", new DialogInterface.OnClickListener() {
+                            new AlertDialog.Builder(MainActivity.this).setTitle(MainActivity.this.getString(R.string.warm_prompt))
+                                    .setMessage(MainActivity.this.getString(R.string.per_camera_notice))
+                                    .setNegativeButton(MainActivity.this.getString(R.string.dialog_btn_cancel_hint_text), null)
+                                    .setPositiveButton(MainActivity.this.getString(R.string.verify_permissions), new DialogInterface.OnClickListener() {
                                         @RequiresApi(api = Build.VERSION_CODES.M)
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
