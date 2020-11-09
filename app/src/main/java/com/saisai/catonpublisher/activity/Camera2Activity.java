@@ -40,6 +40,7 @@ import com.saisai.catonpublisher.util.ImageExt;
 import com.saisai.catonpublisher.util.SPUtils;
 import com.saisai.catonpublisher.util.StateBarTranslucentUtils;
 import com.saisai.catonpublisher.util.StatusBarCompat;
+import com.tencent.bugly.crashreport.CrashReport;
 
 public class Camera2Activity extends AppCompatActivity implements View.OnClickListener {
     private TextView tvBitrate;
@@ -126,6 +127,7 @@ public class Camera2Activity extends AppCompatActivity implements View.OnClickLi
                     } catch (Exception e) {
                         e.printStackTrace();
                         Log.e("owner:handlemsg", e.getMessage());
+                        CrashReport.postCatchedException(e);
                     }
 
                     break;
@@ -154,6 +156,7 @@ public class Camera2Activity extends AppCompatActivity implements View.OnClickLi
         } catch (Exception e) {
             e.printStackTrace();
             Log.e("owner:onCreate", e.getMessage());
+            CrashReport.postCatchedException(e);
         }
 
     }
@@ -281,6 +284,7 @@ public class Camera2Activity extends AppCompatActivity implements View.OnClickLi
         } catch (Exception e) {
             e.printStackTrace();
             Log.e("owner:onConfiguration", e.getMessage());
+            CrashReport.postCatchedException(e);
         }
     }
 
@@ -336,6 +340,7 @@ public class Camera2Activity extends AppCompatActivity implements View.OnClickLi
         } catch (Exception e) {
             e.printStackTrace();
             Log.e("owner:onRestart", e.getMessage());
+            CrashReport.postCatchedException(e);
         }
     }
 
@@ -382,6 +387,7 @@ public class Camera2Activity extends AppCompatActivity implements View.OnClickLi
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.e("owner:ib_switch", e.getMessage());
+                    CrashReport.postCatchedException(e);
                 }
                 break;
             case R.id.iv_back:
@@ -417,6 +423,7 @@ public class Camera2Activity extends AppCompatActivity implements View.OnClickLi
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.e("owner:trans_camera", e.getMessage());
+                    CrashReport.postCatchedException(e);
                 }
                 break;
             case R.id.iv_land_image_audio:
@@ -455,6 +462,7 @@ public class Camera2Activity extends AppCompatActivity implements View.OnClickLi
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.e("owner:iv_image_video", e.getMessage());
+                    CrashReport.postCatchedException(e);
                 }
                 break;
             case R.id.btn_land_start:
@@ -508,6 +516,7 @@ public class Camera2Activity extends AppCompatActivity implements View.OnClickLi
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.e("owner:btn_start", e.getMessage());
+                    CrashReport.postCatchedException(e);
                 }
                 break;
         }

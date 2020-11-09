@@ -41,6 +41,7 @@
             <RadioButton
                 android:id="@+id/rb_0s"
                 android:layout_width="0dp"
+                android:textSize="12sp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:checked="true"
@@ -50,6 +51,7 @@
             <RadioButton
                 android:id="@+id/rb_3s"
                 android:layout_width="0dp"
+                android:textSize="12sp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/text_3s"
@@ -58,6 +60,7 @@
             <RadioButton
                 android:id="@+id/rb_5s"
                 android:layout_width="0dp"
+                android:textSize="12sp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/text_5s"
@@ -66,6 +69,7 @@
             <RadioButton
                 android:id="@+id/rb_10s"
                 android:layout_width="0dp"
+                android:textSize="12sp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/text_10s"
@@ -84,6 +88,7 @@
             <RadioButton
                 android:id="@+id/rb_cover_black"
                 android:layout_width="0dp"
+                android:textSize="12sp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:checked="true"
@@ -93,6 +98,7 @@
             <RadioButton
                 android:id="@+id/rb_cover_gray"
                 android:layout_width="0dp"
+                android:textSize="12sp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/text_gray"
@@ -102,6 +108,7 @@
                 android:id="@+id/rb_cover_white"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:textSize="12sp"
                 android:layout_weight="1"
                 android:text="@string/text_white"
                 android:textColor="@color/normal_text_color" />
@@ -110,6 +117,7 @@
                 android:id="@+id/rb_cover_own"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:textSize="12sp"
                 android:layout_weight="1"
                 android:lines="1"
                 android:text="@string/text_own"
@@ -129,6 +137,7 @@
                 android:id="@+id/rb_show_time_yes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="12sp"
                 android:layout_weight="1"
                 android:checked="true"
                 android:text="@string/yes"
@@ -138,6 +147,7 @@
                 android:id="@+id/rb_show_time_no"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="12sp"
                 android:layout_marginStart="30dp"
                 android:text="@string/no"
                 android:textColor="@color/normal_text_color" />
@@ -157,6 +167,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textSize="12sp"
                 android:checked="true"
                 android:text="@string/yes"
                 android:textColor="@color/normal_text_color" />
@@ -167,6 +178,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:text="@string/no"
+                android:textSize="12sp"
                 android:textColor="@color/normal_text_color" />
         </RadioGroup>
 

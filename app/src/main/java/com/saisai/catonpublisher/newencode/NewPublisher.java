@@ -47,7 +47,6 @@ public class NewPublisher extends RRSConnectRunnable.ConnectListener {
 
     boolean isConnect = false;
     private byte[] mAudioFrame;
-    private FileOutputStream h264File;
 
     private NewPublisher() {
 
@@ -103,14 +102,6 @@ public class NewPublisher extends RRSConnectRunnable.ConnectListener {
                                 bufferInfo.presentationTimeUs / 1000 * 90,
                                 temp,
                                 temp.length);
-                        if (h264File != null) {
-                            try {
-                                h264File.write(temp);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
                     } else {
                         temp = new byte[bufferInfo.size];
                         buffer.get(temp);
@@ -122,14 +113,6 @@ public class NewPublisher extends RRSConnectRunnable.ConnectListener {
                                 bufferInfo.presentationTimeUs / 1000 * 90,
                                 temp,
                                 temp.length);
-                        if (h264File != null) {
-                            try {
-                                h264File.write(temp);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
                     }
                 }
 
@@ -171,12 +154,6 @@ public class NewPublisher extends RRSConnectRunnable.ConnectListener {
     }
 
     public void startPush(IConnectStateListener callback) {
-        try {
-            Log.e(TAG, "path = " + Environment.getExternalStorageDirectory().getAbsolutePath());
-            h264File = new FileOutputStream(new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/2160P.h264"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
         mConnectRunnable = new RRSConnectRunnable(mPublisherConfig.mHost,
                 mPublisherConfig.mPort,
                 mPublisherConfig.mKey,
@@ -187,15 +164,6 @@ public class NewPublisher extends RRSConnectRunnable.ConnectListener {
     }
 
     public void stopPush() {
-        try {
-            if (h264File != null) {
-                h264File.flush();
-                h264File.close();
-                h264File = null;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         mConnectRunnable.disConnect();
     }
 

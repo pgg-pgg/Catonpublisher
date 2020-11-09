@@ -17,6 +17,6 @@ public class MyApplication extends Application{
     public void onCreate() {
         super.onCreate();
         app=this;
-        CrashReport.initCrashReport(getApplicationContext(), "03b3058b63", true);
+        CrashReport.initCrashReport(getApplicationContext(), "3f103867d9", true);
     }
 }
