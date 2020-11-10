@@ -244,7 +244,7 @@
 
         <LinearLayout
             android:id="@+id/ll_land_control_container"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -254,22 +254,20 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="@color/live_image_button_back_color"
+                android:background="@color/select_text_color"
                 android:layout_weight="1">
-                <ImageView
-                    android:id="@+id/iv_land_image_audio"
+                <TextView
+                    android:id="@+id/btn_land_start"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/audio_image"
+                    android:textSize="14sp"
+                    android:textColor="#ffffff"
+                    android:gravity="center"
+                    android:text="@string/live_ready"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
                     tools:ignore="ContentDescription" />
             </FrameLayout>
-
-
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -286,22 +284,21 @@
                     android:layout_marginRight="10dp"
                     tools:ignore="ContentDescription" />
             </FrameLayout>
-
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="@color/select_text_color"
+                android:background="@color/live_image_button_back_color"
                 android:layout_weight="1">
-                <TextView
-                    android:id="@+id/btn_land_start"
+                <ImageView
+                    android:id="@+id/iv_land_image_audio"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textSize="14sp"
-                    android:textColor="#ffffff"
-                    android:gravity="center"
-                    android:text="@string/live_ready"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/audio_image"
                     tools:ignore="ContentDescription" />
             </FrameLayout>
 

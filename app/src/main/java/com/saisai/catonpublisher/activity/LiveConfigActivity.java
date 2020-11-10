@@ -158,7 +158,6 @@ public class LiveConfigActivity extends AppCompatActivity implements View.OnClic
         findViewById(R.id.rb_2160p).setEnabled(resolution.get(NewPublisherConfig.VIDEO_RESOLUTION_2160P) != null);
         findViewById(R.id.rb_1080p).setEnabled(resolution.get(NewPublisherConfig.VIDEO_RESOLUTION_1080P) != null);
         findViewById(R.id.rb_720p).setEnabled(resolution.get(NewPublisherConfig.VIDEO_RESOLUTION_720P) != null);
-        findViewById(R.id.rb_480p).setEnabled(resolution.get(NewPublisherConfig.VIDEO_RESOLUTION_480P) != null);
 
         Map<Integer, Range<Integer>> fps = mSupportFPS.get(CameraCharacteristics.LENS_FACING_BACK);
         findViewById(R.id.rb_video_framerate_15).setEnabled(fps.get(NewPublisherConfig.VIDEO_FPS_15) != null);
@@ -192,12 +191,15 @@ public class LiveConfigActivity extends AppCompatActivity implements View.OnClic
                 mRgVideoCodec.check(R.id.rb_hevc);
                 break;
         }
-        switch (config.mAudioBitrate) {
-            case NewPublisherConfig.AUDIO_BITRATE_64:
+        switch (config.mEncryType) {
+            case NewPublisherConfig.ENCRY_NONE:
                 mRgAudioBit.check(R.id.rb_audio_bitrate_64);
                 break;
-            case NewPublisherConfig.AUDIO_BITRATE_128:
+            case NewPublisherConfig.ENCRY_AES_128:
                 mRgAudioBit.check(R.id.rb_audio_bitrate_128);
+                break;
+            case NewPublisherConfig.ENCRY_AES_256:
+                mRgAudioBit.check(R.id.rb_audio_bitrate_256);
                 break;
         }
         switch (config.mVideoFramerate) {
@@ -215,9 +217,6 @@ public class LiveConfigActivity extends AppCompatActivity implements View.OnClic
                 break;
         }
         switch (config.mVideoResolution) {
-            case NewPublisherConfig.VIDEO_RESOLUTION_480P:
-                mRgResolution.check(R.id.rb_480p);
-                break;
             case NewPublisherConfig.VIDEO_RESOLUTION_720P:
                 mRgResolution.check(R.id.rb_720p);
                 break;
@@ -256,7 +255,6 @@ public class LiveConfigActivity extends AppCompatActivity implements View.OnClic
         findViewById(R.id.rb_2160p).setEnabled(resolution.get(NewPublisherConfig.VIDEO_RESOLUTION_2160P) != null);
         findViewById(R.id.rb_1080p).setEnabled(resolution.get(NewPublisherConfig.VIDEO_RESOLUTION_1080P) != null);
         findViewById(R.id.rb_720p).setEnabled(resolution.get(NewPublisherConfig.VIDEO_RESOLUTION_720P) != null);
-        findViewById(R.id.rb_480p).setEnabled(resolution.get(NewPublisherConfig.VIDEO_RESOLUTION_480P) != null);
 
         Map<Integer, Range<Integer>> fps = mSupportFPS.get(CameraCharacteristics.LENS_FACING_BACK);
         findViewById(R.id.rb_video_framerate_15).setEnabled(fps.get(NewPublisherConfig.VIDEO_FPS_15) != null);
@@ -273,10 +271,6 @@ public class LiveConfigActivity extends AppCompatActivity implements View.OnClic
     private void defaultResolutionSelect() {
         int checkId = getCheckId(mRgResolution);
         if (findViewById(checkId).isEnabled()) {
-            return;
-        }
-        if (findViewById(R.id.rb_480p).isEnabled()) {
-            ((RadioButton) findViewById(R.id.rb_480p)).setChecked(findViewById(R.id.rb_480p).isEnabled());
             return;
         }
         if (findViewById(R.id.rb_720p).isEnabled()) {
@@ -479,9 +473,7 @@ public class LiveConfigActivity extends AppCompatActivity implements View.OnClic
 
         int switchResolution = -1;
         int resolutionId = getCheckId(mRgResolution);
-        if (resolutionId == R.id.rb_480p) {
-            switchResolution = NewPublisherConfig.VIDEO_RESOLUTION_480P;
-        } else if (resolutionId == R.id.rb_720p) {
+        if (resolutionId == R.id.rb_720p) {
             switchResolution = NewPublisherConfig.VIDEO_RESOLUTION_720P;
         } else if (resolutionId == R.id.rb_1080p) {
             switchResolution = NewPublisherConfig.VIDEO_RESOLUTION_1080P;
@@ -501,13 +493,15 @@ public class LiveConfigActivity extends AppCompatActivity implements View.OnClic
         } else if (videoFrameRate == R.id.rb_video_framerate_50) {
             switchVideoFrameRate = NewPublisherConfig.VIDEO_FPS_50;
         }
-
-        int switchAudioBitrate = -1;
+        int switchAudioBitrate = NewPublisherConfig.AUDIO_BITRATE_64;
+        int encryType = -1;
         int audioBitrate = getCheckId(mRgAudioBit);
         if (audioBitrate == R.id.rb_audio_bitrate_64) {
-            switchAudioBitrate = NewPublisherConfig.AUDIO_BITRATE_64;
+            encryType = NewPublisherConfig.ENCRY_NONE;
         } else if (audioBitrate == R.id.rb_audio_bitrate_128) {
-            switchAudioBitrate = NewPublisherConfig.AUDIO_BITRATE_128;
+            encryType = NewPublisherConfig.ENCRY_AES_128;
+        } else if (audioBitrate == R.id.rb_audio_bitrate_256) {
+            encryType = NewPublisherConfig.ENCRY_AES_256;
         }
 
         if (checkDataValid(liveName, liveNet, livePort, liveMbps)) {
@@ -538,6 +532,7 @@ public class LiveConfigActivity extends AppCompatActivity implements View.OnClic
             config.mVideoFramerate = switchVideoFrameRate;
             config.mAudioMimeType = MediaFormat.MIMETYPE_AUDIO_AAC;
             config.mAudioBitrate = switchAudioBitrate;
+            config.mEncryType = encryType;
             config.mAudioSamplerate = NewPublisherConfig.AUDIO_RATE_HZ;
             config.mAudioResource = MediaRecorder.AudioSource.MIC;
             config.imageSrc = base64;

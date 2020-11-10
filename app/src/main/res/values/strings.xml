@@ -32,8 +32,8 @@
     <string name="live_desc">描述</string>
     <string name="show_debug">显示调试信息</string>
     <string name="text_code">编码格式</string>
-    <string name="text_avc">avc</string>
-    <string name="text_hevc">hevc</string>
+    <string name="text_avc">AVC</string>
+    <string name="text_hevc">HEVC</string>
     <string name="live_push_stream">推流分辨率</string>
     <string name="text_480p">480p</string>
     <string name="text_720p">720p</string>
@@ -44,9 +44,10 @@
     <string name="text_25">25帧</string>
     <string name="text_30">30帧</string>
     <string name="text_50">50帧</string>
-    <string name="text_audio_code">音频码率(Kbps)</string>
-    <string name="text_64">64</string>
-    <string name="text_128">128</string>
+    <string name="text_audio_code">加密</string>
+    <string name="text_none">None</string>
+    <string name="text_aes_128">AES_128</string>
+    <string name="text_aes_256">AES_256</string>
     <string name="text_back">返回</string>
     <string name="text_store_success">保存成功</string>
     <string name="text_notice_title_empty">直播名称不可空</string>

@@ -42,6 +42,9 @@ public class NewPublisherConfig implements Parcelable {
     public static final int AUDIO_BITRATE_64 = 64000;
     public static final int AUDIO_BITRATE_128 = 128000;
     public static final int AUDIO_RATE_HZ = 44100;
+    public static final int ENCRY_NONE = 0;
+    public static final int ENCRY_AES_128 = 1;
+    public static final int ENCRY_AES_256 = 2;
 
     public long id;
 
@@ -68,6 +71,7 @@ public class NewPublisherConfig implements Parcelable {
     /* Audio parameters */
     public String mAudioMimeType;
     public int mAudioBitrate;
+    public int mEncryType;
     public int mAudioSamplerate;
     public int mAudioResource;
 

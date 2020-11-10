@@ -95,7 +95,7 @@ public class WlCameraFboRender {
     }
 
     public void onDraw(int textureId) {
-        bitmapTextureid = WlShaderUtil.loadBitmapTexture(bitmap);
+        bitmapTextureid = WlShaderUtil.loadBitmapTexture(bitmapTextureid, bitmap);
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
         GLES20.glClearColor(1f, 0f, 0f, 1f);
         GLES20.glUseProgram(program);

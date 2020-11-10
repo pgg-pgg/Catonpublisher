@@ -89,10 +89,13 @@ public class WlShaderUtil {
         return bm;
     }
 
-    public static int loadBitmapTexture(Bitmap bitmap) {
-        int[] textureIds = new int[1];
-        GLES20.glGenTextures(1, textureIds, 0);
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureIds[0]);
+    public static int loadBitmapTexture(int defaultId, Bitmap bitmap) {
+        if (defaultId == 0) {
+            int[] textureIds = new int[1];
+            GLES20.glGenTextures(1, textureIds, 0);
+            defaultId = textureIds[0];
+        }
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, defaultId);
         GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S, GLES20.GL_REPEAT);
         GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_REPEAT);
         GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
@@ -104,7 +107,7 @@ public class WlShaderUtil {
 
         GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_RGBA, bitmap.getWidth(),
                 bitmap.getHeight(), 0, GLES20.GL_RGBA, GLES20.GL_UNSIGNED_BYTE, bitmapBuffer);
-        return textureIds[0];
+        return defaultId;
     }
 
     public static int loadTexrute(int src, Context context) {

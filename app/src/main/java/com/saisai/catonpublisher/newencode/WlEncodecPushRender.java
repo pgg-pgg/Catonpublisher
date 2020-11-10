@@ -103,7 +103,7 @@ public class WlEncodecPushRender implements WLEGLSurfaceView.WlGLRender{
 
     @Override
     public void onDrawFrame() {
-        bitmapTextureid = WlShaderUtil.loadBitmapTexture(bitmap);
+        bitmapTextureid = WlShaderUtil.loadBitmapTexture(bitmapTextureid,bitmap);
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
         GLES20.glClearColor(1f,0f, 0f, 1f);
 
