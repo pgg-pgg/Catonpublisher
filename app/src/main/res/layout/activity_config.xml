@@ -320,6 +320,7 @@
                     android:id="@+id/rb_720p"
                     android:layout_weight="1"
                     android:layout_width="0dp"
+                    android:checked="true"
                     android:layout_height="wrap_content"
                     android:text="@string/text_720p" />
 
