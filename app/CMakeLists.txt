@@ -25,8 +25,8 @@ add_library( # Sets the name of the library.
 #引用的头文件
 include_directories(
                 src/main/cpp/r2tp/include
-                #src/main/cpp/ssl/include
-                #src/main/cpp/mpegts
+                src/main/cpp/ssl/include
+                src/main/cpp/mpegts
 )
 
 #添加动态库为SHARED 静态库是STATIC

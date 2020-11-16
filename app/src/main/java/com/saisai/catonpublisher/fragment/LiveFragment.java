@@ -61,6 +61,13 @@ public class LiveFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mData = SPUtils.getLiveData();
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {

@@ -81,7 +81,7 @@ int eventCallback(void *connect, int event, int error, void *userdata) {
 
 
 JNIEXPORT jint JNICALL Java_com_saisai_catonpublisher_Jni_connect
-        (JNIEnv *env, jobject obj, jstring host, jint port, jstring key) {
+        (JNIEnv *env, jobject obj, jstring host, jint port, jint auth, jint encrypt, jstring key) {
 
     const char *cHost = (*env)->GetStringUTFChars(env, host, 0);
     const char *cKey = (*env)->GetStringUTFChars(env, key, 0);
@@ -95,7 +95,7 @@ JNIEXPORT jint JNICALL Java_com_saisai_catonpublisher_Jni_connect
         int ret = Open(sendType, NULL, 0);
 
         if (ret == 0) {
-            return Connect(cHost, port, cKey);
+            return Connect(cHost, port, auth, encrypt, cKey);
         } else {
             return ret;
         }
@@ -166,6 +166,7 @@ JNIEXPORT jint JNICALL Java_com_saisai_catonpublisher_Jni_getR2tpVersion
     int minor;
     int revision;
     GetR2tpVersion(&major, &minor, &revision);
+    LOGE("r2tp version: %d.%d.%d\n", major, minor, revision);
     return 0;
 }
 

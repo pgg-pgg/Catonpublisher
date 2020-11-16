@@ -38,7 +38,7 @@ typedef enum ERROR_NUM{
 
 int Open(int state,const char* ip,int port);
 
-int Connect(const char *host, int port, const char *strkey);
+int Connect(const char *host, int port, int auth, int encrypt, const char *strkey);
 
 int SetCallback(R2TPCONNECT_EventHandler eventHandler);
 

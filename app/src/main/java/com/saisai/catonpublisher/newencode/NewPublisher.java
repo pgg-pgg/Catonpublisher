@@ -156,6 +156,8 @@ public class NewPublisher extends RRSConnectRunnable.ConnectListener {
     public void startPush(IConnectStateListener callback) {
         mConnectRunnable = new RRSConnectRunnable(mPublisherConfig.mHost,
                 mPublisherConfig.mPort,
+                mPublisherConfig.mAuth,
+                mPublisherConfig.mEncrypt,
                 mPublisherConfig.mKey,
                 this, callback);
 

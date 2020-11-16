@@ -51,6 +51,8 @@ public class NewPublisherConfig implements Parcelable {
     /* RRS parameters */
     public String mHost;
     public int mPort;
+    public int mEncrypt;
+    public int mAuth;
     public String mKey;
 
     /* Switch camera facing */
@@ -71,7 +73,6 @@ public class NewPublisherConfig implements Parcelable {
     /* Audio parameters */
     public String mAudioMimeType;
     public int mAudioBitrate;
-    public int mEncryType;
     public int mAudioSamplerate;
     public int mAudioResource;
 

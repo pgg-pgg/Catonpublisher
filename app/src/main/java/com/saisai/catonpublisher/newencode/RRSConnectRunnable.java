@@ -14,6 +14,8 @@ public class RRSConnectRunnable extends Thread {
 
     String mHost;
     int mPort;
+    int mAuth;
+    int mEncrypt;
     String mKey;
 
     //是否需要连接
@@ -22,15 +24,18 @@ public class RRSConnectRunnable extends Thread {
     ConnectListener mOnConnectListener;
     IConnectStateListener mOnConnectStateListener;
 
-    public RRSConnectRunnable(String host, int port, String key, ConnectListener connectListener, IConnectStateListener stateListener) {
+    public RRSConnectRunnable(String host, int port, int auth, int encrypt, String key, ConnectListener connectListener, IConnectStateListener stateListener) {
         this.mHost = host;
         this.mPort = port;
+        this.mAuth = auth;
+        this.mEncrypt = encrypt;
         this.mKey = key;
         this.mOnConnectListener=connectListener;
         this.mOnConnectStateListener = stateListener;
 
         Jni.getInstance().setParseStatListener(connectListener);
         Jni.getInstance().setPushListener(connectListener);
+        Jni.getInstance().getR2tpVersion();
     }
 
     @Override
@@ -48,7 +53,7 @@ public class RRSConnectRunnable extends Thread {
             }
             isFirst = false;
 
-            result = Jni.getInstance().connect(this.mHost, this.mPort, this.mKey);
+            result = Jni.getInstance().connect(this.mHost, this.mPort, this.mAuth, this.mEncrypt, this.mKey);
             mOnConnectStateListener.onConnectState(result);
             //判断 是否 需要继续 连接
             if (!connect) {

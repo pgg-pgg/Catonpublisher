@@ -1,6 +1,7 @@
 package com.saisai.catonpublisher.activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,7 +15,9 @@ import android.media.ExifInterface;
 import android.media.MediaFormat;
 import android.media.MediaRecorder;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -37,6 +40,7 @@ import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.lzy.imagepicker.view.CropImageView;
 import com.saisai.catonpublisher.Constants;
 import com.saisai.catonpublisher.R;
+import com.saisai.catonpublisher.newencode.NewPublisher;
 import com.saisai.catonpublisher.newencode.NewPublisherConfig;
 import com.saisai.catonpublisher.util.GlideImageLoader;
 import com.saisai.catonpublisher.util.SPUtils;
@@ -86,6 +90,7 @@ public class LiveConfigActivity extends AppCompatActivity implements View.OnClic
     private NewPublisherConfig mCurConfig;
     private List<NewPublisherConfig> mConfigList;
     private int mCurPos = -1;
+    private long mCurId = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -127,23 +132,25 @@ public class LiveConfigActivity extends AppCompatActivity implements View.OnClic
         initSupportParameters();
         if (getIntent().getExtras() != null) {
             String title = getIntent().getExtras().getString(Constants.KEY_TITLE);
-            long id = getIntent().getExtras().getLong(Constants.KEY_LIVE_ID, -1L);
+            mCurId = getIntent().getExtras().getLong(Constants.KEY_LIVE_ID, -1L);
             //获取存储的配置信息
             mConfigList = SPUtils.getLiveData();
-            if (id != -1) {
+            if (mCurId != -1) {
                 //当前是修改信息
                 if (mConfigList != null && mConfigList.size() > 0) {
                     for (int i = 0; i < mConfigList.size(); i++) {
                         NewPublisherConfig config = mConfigList.get(i);
-                        if (config.id == id) {
+                        if (config.id == mCurId) {
                             mCurConfig = config;
                             mCurPos = i;
                             setData(mCurConfig);
                         }
                     }
                 }
+                mTvBack.setText(getString(R.string.text_delete));
             } else {
                 mTvTitle.setText(title);
+                mTvBack.setText(getString(R.string.text_back));
                 resetUI();
             }
 
@@ -191,7 +198,7 @@ public class LiveConfigActivity extends AppCompatActivity implements View.OnClic
                 mRgVideoCodec.check(R.id.rb_hevc);
                 break;
         }
-        switch (config.mEncryType) {
+        switch (config.mEncrypt) {
             case NewPublisherConfig.ENCRY_NONE:
                 mRgAudioBit.check(R.id.rb_audio_bitrate_64);
                 break;
@@ -532,12 +539,13 @@ public class LiveConfigActivity extends AppCompatActivity implements View.OnClic
             config.mVideoFramerate = switchVideoFrameRate;
             config.mAudioMimeType = MediaFormat.MIMETYPE_AUDIO_AAC;
             config.mAudioBitrate = switchAudioBitrate;
-            config.mEncryType = encryType;
+            config.mEncrypt = encryType;
+            config.mAuth = TextUtils.isEmpty(secretKey) ? 0 : 1;
             config.mAudioSamplerate = NewPublisherConfig.AUDIO_RATE_HZ;
             config.mAudioResource = MediaRecorder.AudioSource.MIC;
             config.imageSrc = base64;
             if (mConfigList == null) {
-                mConfigList = new ArrayList<NewPublisherConfig>();
+                mConfigList = new ArrayList<>();
                 mConfigList.add(config);
             } else {
                 if (mCurPos != -1) {
@@ -572,9 +580,17 @@ public class LiveConfigActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_back:
-            case R.id.btn_back:
                 //返回上一级
                 finish();
+                break;
+            case R.id.btn_back:
+                if (mCurId != -1) {
+                    //修改信息
+                    //删除此配置
+                    showDeleteDialog();
+                } else {
+                    finish();
+                }
                 break;
             case R.id.btn_store:
                 //保存配置信息
@@ -586,6 +602,37 @@ public class LiveConfigActivity extends AppCompatActivity implements View.OnClic
                 break;
 
         }
+    }
+
+    private void showDeleteDialog() {
+        DialogInterface.OnClickListener setListener = null;
+
+        AlertDialog.Builder normalMoreButtonDialog = new AlertDialog.Builder(this);
+        normalMoreButtonDialog.setTitle(getString(R.string.dialog_confirm_delete_text));
+        normalMoreButtonDialog.setMessage(getString(R.string.dialog_confirm_delete_message_text));
+        setListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        dialog.dismiss();
+                        //删除这个数据
+                        NewPublisherConfig config = mConfigList.get(mCurPos);
+                        if (config != null) {
+                            mConfigList.remove(config);
+                        }
+                        SPUtils.saveLiveData(mConfigList);
+                        finish();
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        dialog.dismiss();
+                        break;
+                }
+            }
+        };
+        normalMoreButtonDialog.setPositiveButton(getString(R.string.dialog_confirm_text), setListener);
+        normalMoreButtonDialog.setNegativeButton(getString(R.string.dialog_btn_cancel_hint_text), setListener);
+        normalMoreButtonDialog.create().show();
     }
 
     @Override

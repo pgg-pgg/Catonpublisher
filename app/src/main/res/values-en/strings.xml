@@ -49,6 +49,7 @@
     <string name="text_aes_128">AES_128</string>
     <string name="text_aes_256">AES_256</string>
     <string name="text_back">Back</string>
+    <string name="text_delete">Delete</string>
     <string name="text_store_success">Save Success</string>
     <string name="text_notice_title_empty">Live name cannot be empty</string>
     <string name="text_notice_net_empty">Live server address cannot be empty</string>
@@ -59,6 +60,9 @@
     <string name="live_finish">FINISH</string>
     <string name="live_time">00:00</string>
     <string name="app_right">Copyright @ 2020 Caton All rights reserved</string>
+    <string name="dialog_confirm_delete_text">Delete or not</string>
+    <string name="dialog_confirm_delete_message_text">Data cannot be recovered after deletion</string>
+    <string name="dialog_confirm_text">OK</string>
     <string name="dialog_normal_more_button_text">Confirm to exit？</string>
     <string name="dialog_btn_confirm_hint_text">Confirm</string>
     <string name="dialog_btn_cancel_hint_text">Cancel</string>

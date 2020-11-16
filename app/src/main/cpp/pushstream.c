@@ -15,6 +15,8 @@
 #include "mpegts/mpeg-ts.h"
 #include "r2tp/include/r2tp.h"
 #include "sps_process.h"
+#include "openssl/sha.h"
+#include "openssl/crypto.h"
 
 #define LOGE(format, ...)  __android_log_print(ANDROID_LOG_ERROR, "(>_<)", format, ##__VA_ARGS__)
 #define LOGI(format, ...)  __android_log_print(ANDROID_LOG_INFO,  "(^_^)", format, ##__VA_ARGS__)
@@ -170,7 +172,78 @@ int Open(int state, const char *ip, int port) {
     return 0;
 }
 
-int Connect(const char *serverHost, int port, const char *key) {
+const char* salt = "3450b54a052210ddd7c482b1c0583de9";
+const char* description = "Android R2TP Publisher";	//描述信息
+const char* version = "2";	//固定为2
+const char* type = "101";  //"101"	R2TP Player
+char* sn = "xxxxxxxxxxx"; // 设备序列号
+
+//采用sha1加密生成加密字段mdString
+static void sha1_str(const char* input, char* mdString)
+{
+    SHA_CTX c;
+    unsigned char md[SHA_DIGEST_LENGTH];
+    SHA1_Init(&c);
+    SHA1_Update(&c, input, strlen(input));
+    SHA1_Final(md, &c);
+    OPENSSL_cleanse(&c, sizeof(c));
+    int i;
+    for (i = 0; i < SHA_DIGEST_LENGTH; i++)
+    {
+        sprintf(&mdString[i*2], "%02x", (unsigned int)md[i]);
+    }
+}
+
+//生成认证字符串
+static void genAuthString(const char* input, char* output, int encrypt)
+{
+    char mdString[SHA_DIGEST_LENGTH*2+1];
+    memset(mdString, 0, sizeof(mdString));
+    sha1_str(input, mdString);
+    sprintf(output, "%s:%s:%s:%s:%s:%d", version, type, description, sn, mdString, encrypt);
+}
+
+//设置认证信息
+static int setAuthorization(void  *handle, int bAuth, int encrypt, const char* key)
+{
+    Authorization_t auth;
+    memset(&auth, 0, sizeof(Authorization_t));
+
+    char input[128] = {0};
+    char output[128] = {0};
+
+    if(bAuth) {
+        sprintf(input, "%s:%s:%s:%s", type, sn, key, salt);
+    } else {
+        sprintf(input, "%s:%s:%s:%s", type, sn, "", salt);
+    }
+
+    genAuthString(input, output, encrypt);
+    strcpy(auth.data, output);
+    auth.length = strlen(output);
+    return r2tp_setopt(handle, RO_AUTHORIZATION, &auth, sizeof(auth));
+}
+
+
+//设置加密方式 AES-128/256
+static int setEncryptMode(void *handle, int encrypt, const char *key)
+{
+    char encrypt_key[128] = {0};
+    int ret = 0;
+
+    sprintf(encrypt_key, "%s:%s", key, salt);
+
+    ret = r2tp_setopt(handle, RO_ENCRYPT_MODE, (void *)&encrypt, sizeof(encrypt));
+
+    if(ENCRYPT_NONE != encrypt)
+    {
+        ret = r2tp_setopt(handle, RO_ENCRYPT_KEY, (void*)key, strlen(key));
+    }
+
+    return ret;
+}
+
+int Connect(const char *serverHost, int port, int bAuth, int encrypt, const char *key) {
 
     memset(tsBuf, 0, sizeof(char) * TS_PACKET_SIZE);
     ind = 0;
@@ -180,8 +253,8 @@ int Connect(const char *serverHost, int port, const char *key) {
         return SESSION_ERROR;
     }
 
-    if (NULL == serverHost || NULL == key) {
-        LOGE("Connect:NULL == serverHost || NULL == key");
+    if (NULL == serverHost) {
+        LOGE("Connect:NULL == serverHost");
         return -1;
     }
 
@@ -198,8 +271,10 @@ int Connect(const char *serverHost, int port, const char *key) {
     r2tpConnectPush->eventUserdata = NULL;
 
 
+    setAuthorization(r2tpConnectPush->pR2tpHandle, bAuth, encrypt, key);
+    setEncryptMode(r2tpConnectPush->pR2tpHandle, encrypt, key);
     /*auth*/
-    char tmp[128];
+/*    char tmp[128];
     char mdString[SHA_DIGEST_LENGTH * 2 + 1] = {0};
     sprintf(tmp, "%s:%s:%s:%s", TYPE, SN, key, SALT);
     SHA_CTX ctx;
@@ -217,7 +292,10 @@ int Connect(const char *serverHost, int port, const char *key) {
     if (r2tp_setopt(r2tpConnectPush->pR2tpHandle, RO_AUTHORIZATION, &auth, sizeof(auth)) != 0) {
         LOGE("Connect:r2tp_setopt error");
         return SETOPT_ERROR;
-    }
+    }*/
+    //设置流加密信息 encrypt 为 R2tpEncryptionMode_t类型
+//    r2tp_setopt(r2tpConnectPush->pR2tpHandle, RO_ENCRYPT_MODE, (void *)&encrypt, sizeof(encrypt));
+//    r2tp_setopt(r2tpConnectPush->pR2tpHandle, RO_ENCRYPT_KEY, (void*)key, strlen(key));
 
     /*connect server*/
     R2tpAddr_t serverAddr = {0};
@@ -227,7 +305,7 @@ int Connect(const char *serverHost, int port, const char *key) {
 
 
     int result = -1;
-    if ((result = r2tpv3_connect(r2tpConnectPush->pR2tpHandle, &serverAddr, 1, 1000 * 1000)) != 0) {
+    if ((result = r2tpv3_connect(r2tpConnectPush->pR2tpHandle, &serverAddr, 1, 3000 * 1000)) != 0) {
         LOGE("Connect:r2tp_connect error");
         return result;
     }
@@ -325,10 +403,10 @@ int ParseData(float *dropRate, int *bitrate, int *jitter, int *rtt, int *maxDela
     }
 
     R2tpStat_t st;
-
+    int statLen = sizeof(st);
     memset(&st, 0, sizeof(st));
     pthread_mutex_lock(&r2tpConnectPush->_mutex);
-    if (r2tp_getopt(r2tpConnectPush->pR2tpHandle, RO_STAT, &st, sizeof(st)) == -1) {
+    if (r2tp_getopt(r2tpConnectPush->pR2tpHandle, RO_STAT, &st, &statLen) == -1) {
         LOGE("ParsePullStreamData:r2tp_getopt error");
         pthread_mutex_unlock(&r2tpConnectPush->_mutex);
         return GETOPT_ERROR;
