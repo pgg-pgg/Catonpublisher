@@ -173,9 +173,9 @@ int Open(int state, const char *ip, int port) {
 }
 
 const char* salt = "3450b54a052210ddd7c482b1c0583de9";
-const char* description = "Android R2TP Publisher";	//描述信息
+const char* description = "Caton Publisher";	//描述信息
 const char* version = "2";	//固定为2
-const char* type = "101";  //"101"	R2TP Player
+const char* type = "102";  //"102"	R2TP Player
 char* sn = "xxxxxxxxxxx"; // 设备序列号
 
 //采用sha1加密生成加密字段mdString
@@ -237,7 +237,7 @@ static int setEncryptMode(void *handle, int encrypt, const char *key)
 
     if(ENCRYPT_NONE != encrypt)
     {
-        ret = r2tp_setopt(handle, RO_ENCRYPT_KEY, (void*)key, strlen(key));
+        ret = r2tp_setopt(handle, RO_ENCRYPT_KEY, (void*)encrypt_key, strlen(encrypt_key));
     }
 
     return ret;
@@ -270,9 +270,9 @@ int Connect(const char *serverHost, int port, int bAuth, int encrypt, const char
     r2tpConnectPush->eventHandler = NULL;
     r2tpConnectPush->eventUserdata = NULL;
 
-
-    setAuthorization(r2tpConnectPush->pR2tpHandle, bAuth, encrypt, key);
-    setEncryptMode(r2tpConnectPush->pR2tpHandle, encrypt, key);
+    int ret = 0;
+    ret = setAuthorization(r2tpConnectPush->pR2tpHandle, bAuth, encrypt, key);
+    ret = setEncryptMode(r2tpConnectPush->pR2tpHandle, encrypt, key);
     /*auth*/
 /*    char tmp[128];
     char mdString[SHA_DIGEST_LENGTH * 2 + 1] = {0};
