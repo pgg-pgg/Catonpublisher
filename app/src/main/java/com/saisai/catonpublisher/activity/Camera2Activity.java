@@ -319,7 +319,10 @@ public class Camera2Activity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onDestroy() {
         mTextureView.onDestroy();
-        NewPublisher.getInstance().stopPush();
+        if (isConnect) {
+            NewPublisher.getInstance().stopPush();
+        }
+        NewPublisher.getInstance().setConnect(false);
         NewPublisher.getInstance().close();
         super.onDestroy();
     }

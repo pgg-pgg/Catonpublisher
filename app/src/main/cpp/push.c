@@ -121,7 +121,7 @@ JNIEXPORT jint JNICALL Java_com_saisai_catonpublisher_Jni_pushUDP
     return 0;
 }
 
-JNIEXPORT jbyteArray JNICALL Java_com_saisai_catonpublisher_Jni_getR2tpVersion
+JNIEXPORT jstring JNICALL Java_com_saisai_catonpublisher_Jni_getR2tpVersion
         (JNIEnv *env, jobject obj) {
     int major;
     int minor;
@@ -130,7 +130,8 @@ JNIEXPORT jbyteArray JNICALL Java_com_saisai_catonpublisher_Jni_getR2tpVersion
     GetR2tpVersion(&major, &minor, &revision);
     LOGE("r2tp version: %d.%d.%d\n", major, minor, revision);
     sprintf(input, "%d.%d.%d", major, minor, revision);
-    return input;
+    jstring out = (*env)->NewStringUTF(env, input);
+    return out;
 }
 
 JNIEXPORT jbyteArray JNICALL Java_com_saisai_catonpublisher_Jni_spsSetTimingFlag

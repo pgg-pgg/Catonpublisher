@@ -174,7 +174,7 @@ int Open(int state, const char *ip, int port) {
 
 const char *salt = "3450b54a052210ddd7c482b1c0583de9";
 const char *version = "2";    //固定为2
-const char *type = "102";  //"102"	R2TP Player
+const char *type = "102";  //"102"	Caton Publisher
 
 //采用shsprintfa1加密生成加密字段mdString
 static void sha1_str(const char *input, char *mdString) {
@@ -195,7 +195,7 @@ static void genAuthString(const char *input, char *output, int encrypt, char *sn
     char mdString[SHA_DIGEST_LENGTH * 2 + 1];
     memset(mdString, 0, sizeof(mdString));
     sha1_str(input, mdString);
-    (output, "%s:%s:%s:%s:%s:%d", version, type, desc, sn, mdString, encrypt);
+    sprintf(output, "%s:%s:%s:%s:%s:%d", version, type, desc, sn, mdString, encrypt);
 }
 
 //设置认证信息
@@ -261,7 +261,13 @@ int Connect(const char *serverHost, int port, int bAuth, int encrypt, const char
     pthread_mutex_init(&r2tpConnectPush->_mutex, NULL);
     r2tpConnectPush->eventHandler = NULL;
     r2tpConnectPush->eventUserdata = NULL;
-    setAuthorization(r2tpConnectPush->pR2tpHandle, bAuth, encrypt, key, sn, desc);
+    int major;
+    int minor;
+    int revision;
+    char newSN[1024] = {0};
+    r2tp_get_version(&major, &minor, &revision);
+    sprintf(newSN, "%s%s%d.%d", sn, "%%", major, minor);
+    setAuthorization(r2tpConnectPush->pR2tpHandle, bAuth, encrypt, key, newSN, desc);
     setEncryptMode(r2tpConnectPush->pR2tpHandle, encrypt, key);
     /*connect server*/
     R2tpAddr_t serverAddr = {0};

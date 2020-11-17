@@ -39,8 +39,6 @@ public class RRSConnectRunnable extends Thread {
 
         Jni.getInstance().setParseStatListener(connectListener);
         Jni.getInstance().setPushListener(connectListener);
-        String r2tpVersion = Jni.getInstance().getR2tpVersion();
-        this.mSn = this.mSn + r2tpVersion;
     }
 
     @Override
@@ -95,6 +93,9 @@ public class RRSConnectRunnable extends Thread {
         Jni.getInstance().disconnect();
     }
 
+    public void setConnect(boolean isConnect) {
+        connect = isConnect;
+    }
     public static abstract class ConnectListener implements PushListener, ParseStatListener {
         abstract void onConnected();
 

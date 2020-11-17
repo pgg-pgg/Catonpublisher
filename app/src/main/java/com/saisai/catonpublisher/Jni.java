@@ -161,7 +161,7 @@ public class Jni {
         this.parseStatListener = parseStatListener;
     }
 
-    public native byte[] getR2tpVersion();
+    public native String getR2tpVersion();
 
     public native byte[] spsSetTimingFlag(int codecType,byte[] sps, int len, int fps);
 

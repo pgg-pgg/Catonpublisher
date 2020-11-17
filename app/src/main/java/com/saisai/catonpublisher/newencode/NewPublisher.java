@@ -168,7 +168,15 @@ public class NewPublisher extends RRSConnectRunnable.ConnectListener {
     }
 
     public void stopPush() {
-        mConnectRunnable.disConnect();
+        if (mConnectRunnable != null) {
+            mConnectRunnable.disConnect();
+        }
+    }
+
+    public void setConnect(boolean isConnect) {
+        if (mConnectRunnable != null) {
+            mConnectRunnable.setConnect(isConnect);
+        }
     }
 
     public void close() {

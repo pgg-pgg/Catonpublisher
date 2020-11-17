@@ -530,7 +530,7 @@ public class LiveConfigActivity extends AppCompatActivity implements View.OnClic
             config.mPort = Integer.parseInt(livePort);
             config.mKey = secretKey;
             config.mDesc = EquipmentUtil.getSystemDevice();
-            config.mSn = EquipmentUtil.getSystemModel() + "#" + EquipmentUtil.getSystemVersion() + "#" + EquipmentUtil.getDeviceSN(this.getApplicationContext()) + "%%";
+            config.mSn = EquipmentUtil.getSystemModel() + "#" + EquipmentUtil.getSystemVersion() + "#" + EquipmentUtil.getDeviceSN(this.getApplicationContext());
             config.liveDesc = liveDesc;
             config.showDebug = mCbDebug.isChecked();
             config.mSwitchCameraFacing = NewPublisherConfig.CAMERA2_FACING_BACK;
