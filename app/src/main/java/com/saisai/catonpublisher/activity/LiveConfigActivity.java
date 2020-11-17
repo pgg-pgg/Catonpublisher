@@ -42,6 +42,7 @@ import com.saisai.catonpublisher.Constants;
 import com.saisai.catonpublisher.R;
 import com.saisai.catonpublisher.newencode.NewPublisher;
 import com.saisai.catonpublisher.newencode.NewPublisherConfig;
+import com.saisai.catonpublisher.util.EquipmentUtil;
 import com.saisai.catonpublisher.util.GlideImageLoader;
 import com.saisai.catonpublisher.util.SPUtils;
 import com.saisai.catonpublisher.util.StateBarTranslucentUtils;
@@ -528,6 +529,8 @@ public class LiveConfigActivity extends AppCompatActivity implements View.OnClic
             config.mHost = liveNet;
             config.mPort = Integer.parseInt(livePort);
             config.mKey = secretKey;
+            config.mDesc = EquipmentUtil.getSystemDevice();
+            config.mSn = EquipmentUtil.getSystemModel() + "#" + EquipmentUtil.getSystemVersion() + "#" + EquipmentUtil.getDeviceSN(this.getApplicationContext()) + "%%";
             config.liveDesc = liveDesc;
             config.showDebug = mCbDebug.isChecked();
             config.mSwitchCameraFacing = NewPublisherConfig.CAMERA2_FACING_BACK;

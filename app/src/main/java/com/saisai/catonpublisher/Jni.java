@@ -83,7 +83,7 @@ public class Jni {
      * @param key
      * @return
      */
-    public native int connect(String host, int port, int auth, int encrypt, String key);
+    public native int connect(String host, int port, int auth, int encrypt, String key, String sn, String desc);
 
     /**
      * 将一帧数据推向服务器
@@ -161,7 +161,7 @@ public class Jni {
         this.parseStatListener = parseStatListener;
     }
 
-    public native void getR2tpVersion();
+    public native byte[] getR2tpVersion();
 
     public native byte[] spsSetTimingFlag(int codecType,byte[] sps, int len, int fps);
 

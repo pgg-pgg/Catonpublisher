@@ -54,6 +54,8 @@ public class NewPublisherConfig implements Parcelable {
     public int mEncrypt;
     public int mAuth;
     public String mKey;
+    public String mSn;
+    public String mDesc;
 
     /* Switch camera facing */
     public int mSwitchCameraFacing;

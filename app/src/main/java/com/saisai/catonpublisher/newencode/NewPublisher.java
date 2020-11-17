@@ -159,6 +159,8 @@ public class NewPublisher extends RRSConnectRunnable.ConnectListener {
                 mPublisherConfig.mAuth,
                 mPublisherConfig.mEncrypt,
                 mPublisherConfig.mKey,
+                mPublisherConfig.mSn,
+                mPublisherConfig.mDesc,
                 this, callback);
 
         mConnectRunnable.start();

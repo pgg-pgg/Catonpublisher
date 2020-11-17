@@ -9,6 +9,7 @@
 #include <android/log.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <stdio.h>
 #include <pthread.h>
 #include "pushstream.h"
 #include "mpegts/mpeg-ts.h"
@@ -23,45 +24,6 @@ jclass callbackCls;
 JavaVM *javaVM;
 int sendType;
 
-//unsigned char *tsBuf;
-//pthread_mutex_t mpegWriteLock;
-//int ind = -1;
-//int file;
-////第一个数据帧不是视频帧则丢掉
-//int first = -1;
-//
-//mpeg_ts_enc_context_t *ts_enc_context = NULL;
-//
-//void *mpegalloc(void *param, size_t bytes) {
-//
-//    param = (void *) malloc(bytes);
-//    return param;
-//}
-//
-//void mpegfree(void *param, void *packet) {
-//
-//    free(param);
-//    free(packet);
-//}
-//
-//void mpegwrite(void *param, const void *packet, size_t bytes) {
-//
-//    pthread_mutex_lock(&mpegWriteLock);
-//    memcpy(tsBuf + ind, packet, bytes);
-//    ind += bytes;
-//    if (ind >= TS_PACKET_SIZE) {
-//        ind = 0;
-//        write(file,tsBuf,TS_PACKET_SIZE);
-//        memset(tsBuf, 0, TS_PACKET_SIZE);
-//    }
-//    pthread_mutex_unlock(&mpegWriteLock);
-////    LOGE("ind = %d",ind);
-//}
-
-
-
-
-
 int eventCallback(void *connect, int event, int error, void *userdata) {
 
     if (javaVM != NULL) {
@@ -72,7 +34,6 @@ int eventCallback(void *connect, int event, int error, void *userdata) {
         jmethodID callBack = (*env)->GetStaticMethodID(env, callbackCls, "eventCallback",
                                                        "(II)V");
         (*env)->CallStaticVoidMethod(env, callbackCls, callBack, event, error);
-//        (*javaVM)->DetachCurrentThread(javaVM);
         return 0;
     }
 
@@ -81,12 +42,12 @@ int eventCallback(void *connect, int event, int error, void *userdata) {
 
 
 JNIEXPORT jint JNICALL Java_com_saisai_catonpublisher_Jni_connect
-        (JNIEnv *env, jobject obj, jstring host, jint port, jint auth, jint encrypt, jstring key) {
+        (JNIEnv *env, jobject obj, jstring host, jint port, jint auth, jint encrypt, jstring key, jstring sn, jstring desc) {
 
     const char *cHost = (*env)->GetStringUTFChars(env, host, 0);
     const char *cKey = (*env)->GetStringUTFChars(env, key, 0);
-
-//    sendType=STATE_UDPSEND;
+    const char *cSn = (*env)->GetStringUTFChars(env, sn, 0);
+    const char *cDesc = (*env)->GetStringUTFChars(env, desc, 0);
     sendType=STATE_R2TPSEND;
 
     if(sendType==STATE_UDPSEND){
@@ -95,7 +56,7 @@ JNIEXPORT jint JNICALL Java_com_saisai_catonpublisher_Jni_connect
         int ret = Open(sendType, NULL, 0);
 
         if (ret == 0) {
-            return Connect(cHost, port, auth, encrypt, cKey);
+            return Connect(cHost, port, auth, encrypt, cKey, cSn, cDesc);
         } else {
             return ret;
         }
@@ -160,14 +121,16 @@ JNIEXPORT jint JNICALL Java_com_saisai_catonpublisher_Jni_pushUDP
     return 0;
 }
 
-JNIEXPORT jint JNICALL Java_com_saisai_catonpublisher_Jni_getR2tpVersion
+JNIEXPORT jbyteArray JNICALL Java_com_saisai_catonpublisher_Jni_getR2tpVersion
         (JNIEnv *env, jobject obj) {
     int major;
     int minor;
     int revision;
+    char input[128] = {0};
     GetR2tpVersion(&major, &minor, &revision);
     LOGE("r2tp version: %d.%d.%d\n", major, minor, revision);
-    return 0;
+    sprintf(input, "%d.%d.%d", major, minor, revision);
+    return input;
 }
 
 JNIEXPORT jbyteArray JNICALL Java_com_saisai_catonpublisher_Jni_spsSetTimingFlag
@@ -187,64 +150,4 @@ JNIEXPORT jbyteArray JNICALL Java_com_saisai_catonpublisher_Jni_spsSetTimingFlag
 
     return dst;
 }
-
-//JNIEXPORT jint JNICALL Java_com_saisai_catonpublisher_Jni_initWrite
-//        (JNIEnv *env, jobject obj,jstring path){
-//
-//    struct mpeg_ts_func_t h;
-//    h.alloc = mpegalloc;
-//    h.free = mpegfree;
-//    h.write = mpegwrite;
-//
-//    void *param;
-//
-//    ts_enc_context = mpeg_ts_create(&h, param);
-//    if (ts_enc_context == NULL) {
-//        LOGE("Open:ts_enc_context == NULL");
-//        return -1;
-//    }
-//
-//    //设置 处理的音频和视频格式
-//    ts_enc_context->pat.pmts[0].stream_count = 2; // H.264 + AAC
-//    ts_enc_context->pat.pmts[0].streams[0].pid = 0x101;
-//    ts_enc_context->pat.pmts[0].streams[0].sid = PES_SID_AUDIO;
-//    ts_enc_context->pat.pmts[0].streams[0].codecid = PSI_STREAM_AAC;
-//    ts_enc_context->pat.pmts[0].streams[1].pid = 0x102;
-//    ts_enc_context->pat.pmts[0].streams[1].sid = PES_SID_VIDEO;
-//    ts_enc_context->pat.pmts[0].streams[1].codecid = PSI_STREAM_H264;
-//
-//    pthread_mutex_init(&mpegWriteLock, NULL);
-//    if(NULL!=tsBuf){
-//        free(tsBuf);
-//        tsBuf=NULL;
-//    }
-//    tsBuf = malloc(sizeof(char) * TS_PACKET_SIZE);
-//
-//    const char* cPath=(*env)->GetStringUTFChars(env,path,0);
-//    file = open(cPath, O_RDWR | O_CREAT);
-//}
-//
-//JNIEXPORT jint JNICALL Java_com_saisai_catonpublisher_Jni_write
-//        (JNIEnv *env, jobject obj,jint type, jint flag, jlong pts, jlong dts, jbyteArray data,
-//         jint len){
-//
-//    uint16_t stream_type;
-//    if (type == 0) {//0表示 video
-//        first = 1;
-//        stream_type = 0x102;
-//    } else {
-//        if (first < 0) {
-//            LOGE("第一帧不是视频帧，丢弃==========");
-//            return 0;
-//        }
-//        stream_type = 0x101;
-//    }
-//
-//    jbyte *Src_data = malloc(sizeof(jbyte) * len);
-//    (*env)->GetByteArrayRegion(env, data, 0, len, Src_data);
-//    mpeg_ts_write(ts_enc_context, stream_type, flag, pts, dts, (void *) Src_data, (size_t)len);
-//    free(Src_data);
-//    return 0;
-//}
-
 

@@ -88,7 +88,7 @@ void mpegwrite(void *param, const void *packet, size_t bytes) {
             case STATE_UDPSEND: {
                 ssize_t ret = sendto(fd, tsBuf, 1316, 0, (struct sockaddr_in *) &addr,
                                      sizeof(addr));
-                LOGE("UDP send ret = %d",ret);
+                LOGE("UDP send ret = %d", ret);
                 break;
             }
             case STATE_R2TPSEND: {
@@ -172,15 +172,12 @@ int Open(int state, const char *ip, int port) {
     return 0;
 }
 
-const char* salt = "3450b54a052210ddd7c482b1c0583de9";
-const char* description = "Caton Publisher";	//描述信息
-const char* version = "2";	//固定为2
-const char* type = "102";  //"102"	R2TP Player
-char* sn = "xxxxxxxxxxx"; // 设备序列号
+const char *salt = "3450b54a052210ddd7c482b1c0583de9";
+const char *version = "2";    //固定为2
+const char *type = "102";  //"102"	R2TP Player
 
-//采用sha1加密生成加密字段mdString
-static void sha1_str(const char* input, char* mdString)
-{
+//采用shsprintfa1加密生成加密字段mdString
+static void sha1_str(const char *input, char *mdString) {
     SHA_CTX c;
     unsigned char md[SHA_DIGEST_LENGTH];
     SHA1_Init(&c);
@@ -188,37 +185,34 @@ static void sha1_str(const char* input, char* mdString)
     SHA1_Final(md, &c);
     OPENSSL_cleanse(&c, sizeof(c));
     int i;
-    for (i = 0; i < SHA_DIGEST_LENGTH; i++)
-    {
-        sprintf(&mdString[i*2], "%02x", (unsigned int)md[i]);
+    for (i = 0; i < SHA_DIGEST_LENGTH; i++) {
+        sprintf(&mdString[i * 2], "%02x", (unsigned int) md[i]);
     }
 }
 
 //生成认证字符串
-static void genAuthString(const char* input, char* output, int encrypt)
-{
-    char mdString[SHA_DIGEST_LENGTH*2+1];
+static void genAuthString(const char *input, char *output, int encrypt, char *sn, char *desc) {
+    char mdString[SHA_DIGEST_LENGTH * 2 + 1];
     memset(mdString, 0, sizeof(mdString));
     sha1_str(input, mdString);
-    sprintf(output, "%s:%s:%s:%s:%s:%d", version, type, description, sn, mdString, encrypt);
+    (output, "%s:%s:%s:%s:%s:%d", version, type, desc, sn, mdString, encrypt);
 }
 
 //设置认证信息
-static int setAuthorization(void  *handle, int bAuth, int encrypt, const char* key)
-{
+static int
+setAuthorization(void *handle, int bAuth, int encrypt, const char *key, char *sn, char *desc) {
     Authorization_t auth;
     memset(&auth, 0, sizeof(Authorization_t));
 
     char input[128] = {0};
     char output[128] = {0};
-
-    if(bAuth) {
+    if (bAuth) {
         sprintf(input, "%s:%s:%s:%s", type, sn, key, salt);
     } else {
         sprintf(input, "%s:%s:%s:%s", type, sn, "", salt);
     }
 
-    genAuthString(input, output, encrypt);
+    genAuthString(input, output, encrypt, sn, desc);
     strcpy(auth.data, output);
     auth.length = strlen(output);
     return r2tp_setopt(handle, RO_AUTHORIZATION, &auth, sizeof(auth));
@@ -226,24 +220,22 @@ static int setAuthorization(void  *handle, int bAuth, int encrypt, const char* k
 
 
 //设置加密方式 AES-128/256
-static int setEncryptMode(void *handle, int encrypt, const char *key)
-{
+static int setEncryptMode(void *handle, int encrypt, const char *key) {
     char encrypt_key[128] = {0};
     int ret = 0;
 
     sprintf(encrypt_key, "%s:%s", key, salt);
 
-    ret = r2tp_setopt(handle, RO_ENCRYPT_MODE, (void *)&encrypt, sizeof(encrypt));
+    ret = r2tp_setopt(handle, RO_ENCRYPT_MODE, (void *) &encrypt, sizeof(encrypt));
 
-    if(ENCRYPT_NONE != encrypt)
-    {
-        ret = r2tp_setopt(handle, RO_ENCRYPT_KEY, (void*)encrypt_key, strlen(encrypt_key));
+    if (ENCRYPT_NONE != encrypt) {
+        ret = r2tp_setopt(handle, RO_ENCRYPT_KEY, (void *) encrypt_key, strlen(encrypt_key));
     }
 
     return ret;
 }
 
-int Connect(const char *serverHost, int port, int bAuth, int encrypt, const char *key) {
+int Connect(const char *serverHost, int port, int bAuth, int encrypt, const char *key, const char *sn,const char *desc) {
 
     memset(tsBuf, 0, sizeof(char) * TS_PACKET_SIZE);
     ind = 0;
@@ -269,34 +261,8 @@ int Connect(const char *serverHost, int port, int bAuth, int encrypt, const char
     pthread_mutex_init(&r2tpConnectPush->_mutex, NULL);
     r2tpConnectPush->eventHandler = NULL;
     r2tpConnectPush->eventUserdata = NULL;
-
-    int ret = 0;
-    ret = setAuthorization(r2tpConnectPush->pR2tpHandle, bAuth, encrypt, key);
-    ret = setEncryptMode(r2tpConnectPush->pR2tpHandle, encrypt, key);
-    /*auth*/
-/*    char tmp[128];
-    char mdString[SHA_DIGEST_LENGTH * 2 + 1] = {0};
-    sprintf(tmp, "%s:%s:%s:%s", TYPE, SN, key, SALT);
-    SHA_CTX ctx;
-    int ret = SHA1_Init(&ctx);
-    ret = SHA1_Update(&ctx, tmp, strlen(tmp));
-    unsigned char digest[128] = {0};
-    ret = SHA1_Final(digest, &ctx);
-    int i = 0;
-    for (; i < SHA_DIGEST_LENGTH; i++) {
-        sprintf(&mdString[i * 2], "%02x", (unsigned int) digest[i]);
-    }
-    Authorization_t auth = {0};
-    sprintf((char *) auth.data, "%s:%s:%s:%s", "1", TYPE, SN, mdString);
-    auth.length = (int) strlen((const char *) auth.data);
-    if (r2tp_setopt(r2tpConnectPush->pR2tpHandle, RO_AUTHORIZATION, &auth, sizeof(auth)) != 0) {
-        LOGE("Connect:r2tp_setopt error");
-        return SETOPT_ERROR;
-    }*/
-    //设置流加密信息 encrypt 为 R2tpEncryptionMode_t类型
-//    r2tp_setopt(r2tpConnectPush->pR2tpHandle, RO_ENCRYPT_MODE, (void *)&encrypt, sizeof(encrypt));
-//    r2tp_setopt(r2tpConnectPush->pR2tpHandle, RO_ENCRYPT_KEY, (void*)key, strlen(key));
-
+    setAuthorization(r2tpConnectPush->pR2tpHandle, bAuth, encrypt, key, sn, desc);
+    setEncryptMode(r2tpConnectPush->pR2tpHandle, encrypt, key);
     /*connect server*/
     R2tpAddr_t serverAddr = {0};
     serverAddr.ip_version = R2TP_IPV4;
@@ -351,12 +317,12 @@ int PutFrame(int streamType, int codecType, int flag, long pts, long dts, const 
         return -1;
     }
 
-    LOGE("codecType = %d",codecType);
+    LOGE("codecType = %d", codecType);
     uint16_t stream_id;
     if (streamType == 0) {//0表示 video
         first = 1;
         //判断视频流是否初始化
-        if(VIDEO_PID==-1){
+        if (VIDEO_PID == -1) {
             VIDEO_PID = mpeg_ts_add_stream(ts_enc_context, codecType, NULL, 0);
         }
         stream_id = VIDEO_PID;
@@ -366,13 +332,13 @@ int PutFrame(int streamType, int codecType, int flag, long pts, long dts, const 
             return 0;
         }
 //        //判断视频流是否初始化
-        if(AUDIO_PID==-1){
+        if (AUDIO_PID == -1) {
             AUDIO_PID = mpeg_ts_add_stream(ts_enc_context, codecType, NULL, 0);
         }
         stream_id = AUDIO_PID;
     }
 
-    if(VIDEO_PID==-1 || AUDIO_PID==-1){
+    if (VIDEO_PID == -1 || AUDIO_PID == -1) {
         LOGE("音频或视频没有初始化完成，请等待。。。。");
         return 0;
     }
@@ -388,7 +354,7 @@ int PutFrame(int streamType, int codecType, int flag, long pts, long dts, const 
 
 int ParseData(float *dropRate, int *bitrate, int *jitter, int *rtt, int *maxDelay) {
 
-    if(send_state!=STATE_R2TPSEND){
+    if (send_state != STATE_R2TPSEND) {
         return 0;
     }
 
@@ -448,15 +414,15 @@ int Disconnect() {
     }
     ind = 0;
     first = -1;
-    VIDEO_PID=-1;
-    AUDIO_PID=-1;
+    VIDEO_PID = -1;
+    AUDIO_PID = -1;
 
     if (tsFile != NULL) {
         fclose(tsFile);
         tsFile = NULL;
     }
 
-    if(send_state==STATE_UDPSEND){
+    if (send_state == STATE_UDPSEND) {
         close(fd);
     }
 
@@ -488,7 +454,9 @@ int Disconnect() {
     return 0;
 }
 
-int spsSetTimingFlag(int codecId,int fps,unsigned char* sps_src,int src_len,unsigned char* sps_dst,int *dst_len){
+int
+spsSetTimingFlag(int codecId, int fps, unsigned char *sps_src, int src_len, unsigned char *sps_dst,
+                 int *dst_len) {
     int framerate_index = FPS_UNKNOW;
     switch (fps) {
         case 15: {
