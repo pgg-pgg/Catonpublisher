@@ -367,11 +367,7 @@ public class Camera2Activity extends AppCompatActivity implements View.OnClickLi
                     if (bitmap == null) {
                         return ImageExt.getBitmapByColor("#00000000");
                     }
-                    if (isVerity) {
-                        return bitmap;
-                    } else {
-                        return SPUtils.zoomImg(bitmap, 1920, 1080);
-                    }
+                    return SPUtils.initBitmap(bitmap, isVerity);
             }
         }
         return ImageExt.getBitmapByColor("#00000000");

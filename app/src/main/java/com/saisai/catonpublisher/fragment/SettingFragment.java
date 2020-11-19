@@ -129,10 +129,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     private void selectImage() {
         imagePicker.setMultiMode(false);
         imagePicker.setStyle(CropImageView.Style.RECTANGLE);
-        imagePicker.setFocusWidth(1080);
-        imagePicker.setFocusHeight(1920);
-        imagePicker.setOutPutX(1080);
-        imagePicker.setOutPutY(1920);
+        imagePicker.setCrop(false);
         Intent intent = new Intent(getActivity(), ImageGridActivity.class);
         intent.putExtra(ImageGridActivity.EXTRAS_IMAGES, images);
         startActivityForResult(intent, 100);

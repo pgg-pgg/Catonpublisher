@@ -95,6 +95,28 @@ public class SPUtils {
         return bit;
     }
 
+    public static Bitmap initBitmap(Bitmap bm, boolean isVertical) {
+        int w = bm.getWidth(); // 得到图片的宽，高
+        int h = bm.getHeight();
+        double wh = (double) w / (double) h;
+        if (wh >= 1) {
+            //宽比高大，是横图
+            if (isVertical) {
+                return zoomImg(bm, 1080, 1920);
+            } else {
+                return bm;
+            }
+        } else {
+            //宽比高小，是竖图
+            if (isVertical) {
+                return bm;
+            } else {
+                return zoomImg(bm, 1920, 1080);
+            }
+        }
+    }
+
+
     public static NewPublisherConfig getNewPublisherConfig(long id) {
         List<NewPublisherConfig> liveData = getLiveData();
         if (liveData != null && liveData.size() > 0) {
