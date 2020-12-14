@@ -143,11 +143,12 @@ public class Camera2Activity extends AppCompatActivity implements View.OnClickLi
         try {
             long liveId = getIntent().getExtras().getLong(Constants.KEY_LIVE_ID, 0L);
             mConfig = SPUtils.getNewPublisherConfig(liveId);
+            mSettingConfig = SPUtils.getSettingConfig();
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);   //应用运行时，保持屏幕高亮，不锁屏
             if (mConfig == null) {
                 finish();
             }
-            NewPublisher.getInstance().setConfig(mConfig);
+            NewPublisher.getInstance().setConfig(mConfig, mSettingConfig);
             StateBarTranslucentUtils.setStateBarTranslucent(this);
             setContentView(R.layout.activity_camera2);
             StatusBarCompat.compat(this);
@@ -208,7 +209,6 @@ public class Camera2Activity extends AppCompatActivity implements View.OnClickLi
         findViewById(R.id.root).setOnClickListener(this);
         mTvLiveTitle.setText(mConfig.liveTitle);
         mTvTime.setText(R.string.live_time);
-        mSettingConfig = SPUtils.getSettingConfig();
         if (mSettingConfig != null) {
             if (TextUtils.isEmpty(mSettingConfig.danmuText) || !mSettingConfig.isShowDanmu) {
                 mTvDanmu.setVisibility(View.GONE);

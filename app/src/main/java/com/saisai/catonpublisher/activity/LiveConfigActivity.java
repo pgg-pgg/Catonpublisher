@@ -388,19 +388,19 @@ public class LiveConfigActivity extends AppCompatActivity implements View.OnClic
 
             if (fps.get(NewPublisherConfig.VIDEO_FPS_15) == null) {
                 fps.put(NewPublisherConfig.VIDEO_FPS_15,
-                        new Range<>(15, 15));
+                        NewPublisherConfig.getFps(NewPublisherConfig.VIDEO_FPS_15, ranges));
             }
             if (fps.get(NewPublisherConfig.VIDEO_FPS_24) == null) {
                 fps.put(NewPublisherConfig.VIDEO_FPS_24,
-                        new Range<>(25, 25));
+                        NewPublisherConfig.getFps(NewPublisherConfig.VIDEO_FPS_24, ranges));
             }
             if (fps.get(NewPublisherConfig.VIDEO_FPS_30) == null) {
                 fps.put(NewPublisherConfig.VIDEO_FPS_30,
-                        new Range<>(30, 30));
+                        NewPublisherConfig.getFps(NewPublisherConfig.VIDEO_FPS_30, ranges));
             }
             if (fps.get(NewPublisherConfig.VIDEO_FPS_50) == null) {
                 fps.put(NewPublisherConfig.VIDEO_FPS_50,
-                        new Range<>(30, 30));
+                        NewPublisherConfig.getFps(NewPublisherConfig.VIDEO_FPS_50, ranges));
             }
             mSupportFPS.put(characteristics.get(CameraCharacteristics.LENS_FACING), fps);
 

@@ -42,18 +42,20 @@ int eventCallback(void *connect, int event, int error, void *userdata) {
 
 
 JNIEXPORT jint JNICALL Java_com_saisai_catonpublisher_Jni_connect
-        (JNIEnv *env, jobject obj, jstring host, jint port, jint auth, jint encrypt, jstring key, jstring sn, jstring desc) {
+        (JNIEnv *env, jobject obj, jstring host, jint port, jint auth, jint encrypt, jstring key, jstring sn, jstring desc, jstring service_provider, jstring service_name) {
 
     const char *cHost = (*env)->GetStringUTFChars(env, host, 0);
     const char *cKey = (*env)->GetStringUTFChars(env, key, 0);
     const char *cSn = (*env)->GetStringUTFChars(env, sn, 0);
     const char *cDesc = (*env)->GetStringUTFChars(env, desc, 0);
+    const char *cServiceProvider = (*env)->GetStringUTFChars(env, service_provider, 0);
+    const char *cServiceName = (*env)->GetStringUTFChars(env, service_name, 0);
     sendType=STATE_R2TPSEND;
 
     if(sendType==STATE_UDPSEND){
-        return Open(sendType, cHost,port);
+        return Open(sendType, cHost, port, cServiceProvider, cServiceName);
     } else if(sendType==STATE_R2TPSEND){
-        int ret = Open(sendType, NULL, 0);
+        int ret = Open(sendType, NULL, 0, cServiceProvider, cServiceName);
 
         if (ret == 0) {
             return Connect(cHost, port, auth, encrypt, cKey, cSn, cDesc);
@@ -116,7 +118,7 @@ JNIEXPORT jint JNICALL Java_com_saisai_catonpublisher_Jni_pushUDP
 
     const char *cHost = (*env)->GetStringUTFChars(env, host, 0);
 
-    Open(STATE_UDPSEND, cHost, port);
+    Open(STATE_UDPSEND, cHost, port, NULL, NULL);
 
     return 0;
 }

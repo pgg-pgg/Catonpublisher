@@ -18,6 +18,7 @@
 #include <strings.h>
 
 #define PAT_PERIOD          (400 * 90) // 500ms
+#define SDT_PERIOD          (400 * 90) // 500ms
 
 #define LOGE(format, ...)  __android_log_print(ANDROID_LOG_ERROR, "(>_<)", format, ##__VA_ARGS__)
 #define LOGI(format, ...)  __android_log_print(ANDROID_LOG_INFO,  "(^_^)", format, ##__VA_ARGS__)
@@ -307,6 +308,15 @@ int mpeg_ts_write(void *ts, int pid, int flags, int64_t pts, int64_t dts, const 
         }
     }
 
+    if (0 == tsctx->sdt_period ||
+        tsctx->sdt_period + SDT_PERIOD <= dts) {
+        //SDT()
+        tsctx->sdt_period = dts;
+        r = sdt_write(&tsctx->pat, tsctx->payload);
+        mpeg_ts_write_section_header(ts, 0x11, &tsctx->pat.sdt.cc, tsctx->payload,
+                                     r); // PID = 0x11 service description table
+    }
+
 //    if (0 == tsctx->pat_period) {
 //        // PAT(program_association_section)
 //        r = pat_write(&tsctx->pat, tsctx->payload);
@@ -326,7 +336,7 @@ int mpeg_ts_write(void *ts, int pid, int flags, int64_t pts, int64_t dts, const 
     return 0;
 }
 
-void *mpeg_ts_create(const struct mpeg_ts_func_t *func, void *param) {
+void *mpeg_ts_create(const struct mpeg_ts_func_t *func, void *param, const char *service_provider, const char* service_name) {
     mpeg_ts_enc_context_t *tsctx = NULL;
 
     assert(func);
@@ -360,7 +370,35 @@ void *mpeg_ts_create(const struct mpeg_ts_func_t *func, void *param) {
     tsctx->pat_period = 0;
     tsctx->pat_packet_count = 0;
     tsctx->pat_packet_period = 200;
+    tsctx->sdt_period = 0;
 
+    struct service_desc_t desc;
+    memset(&desc, 0, sizeof(struct service_desc_t));
+    desc.dtag = 0x48;
+    desc.stype = 0x01;
+    if(NULL != service_provider) {
+        strcpy(desc.spname, service_provider);
+    } else {
+        strcpy(desc.spname, "Caton");
+    }
+
+    if(NULL != service_name) {
+        strcpy(desc.sname, service_name);
+    } else {
+        strcpy(desc.sname, "CatonPublisher");
+    }
+
+    desc.spnlength = strlen(desc.spname);
+    desc.snlength = strlen(desc.sname);
+    desc.dlength = desc.snlength + desc.spnlength + 3;
+
+    tsctx->pat.sdt.tsid = 1;
+    tsctx->pat.sdt.ver = 0;
+    tsctx->pat.sdt.cc = 0;
+    tsctx->pat.sdt.desc[0].sid = tsctx->pat.pmts[0].pn;
+    tsctx->pat.sdt.desc[0].rstatus = 4; //running
+    memcpy(&tsctx->pat.sdt.desc[0].sdesc[0], &desc, sizeof(struct service_desc_t));
+    tsctx->pat.sdt.desc[0].dllength = tsctx->pat.sdt.desc[0].sdesc[0].dlength + 2;
 
     memcpy(&tsctx->func, func, sizeof(tsctx->func));
     tsctx->param = param;

@@ -39,6 +39,7 @@ typedef struct _mpeg_ts_enc_context_t
     int64_t pat_packet_count;
 	int64_t pcr_period;
 	int64_t pcr_clock; // last pcr time
+	int64_t sdt_period;
 
 //	unsigned int pat_period;
 //	unsigned int pat_packet_period;
@@ -52,7 +53,7 @@ typedef struct _mpeg_ts_enc_context_t
 	uint8_t payload[1024]; // maximum PAT/PMT payload length
 } mpeg_ts_enc_context_t;
 
-void* mpeg_ts_create(const struct mpeg_ts_func_t *func, void* param);
+void* mpeg_ts_create(const struct mpeg_ts_func_t *func, void* param, const char *service_provider, const char *service_name);
 int mpeg_ts_destroy(void* ts);
 int mpeg_ts_add_stream(void* ts, int codecid, const void* extradata, size_t extradata_size);
 int mpeg_ts_write(void* ts, int stream, int flags, int64_t pts, int64_t dts, const void* data, size_t bytes);

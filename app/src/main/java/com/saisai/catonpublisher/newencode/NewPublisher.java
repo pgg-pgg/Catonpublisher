@@ -43,6 +43,7 @@ public class NewPublisher extends RRSConnectRunnable.ConnectListener {
     private static NewPublisher instance = null;
     private WlPushEncodec pushEncodec;
     private NewPublisherConfig mPublisherConfig;
+    private SettingConfig mSettingConfig;
     private RRSConnectRunnable mConnectRunnable;
 
     boolean isConnect = false;
@@ -63,8 +64,9 @@ public class NewPublisher extends RRSConnectRunnable.ConnectListener {
         return instance;
     }
 
-    public void setConfig(NewPublisherConfig publishConfig) {
+    public void setConfig(NewPublisherConfig publishConfig, SettingConfig settingConfig) {
         mPublisherConfig = publishConfig;
+        mSettingConfig = settingConfig;
     }
 
     public void init(Context context, EGLContext eglContext, int textureId, boolean isVerity) {
@@ -161,6 +163,8 @@ public class NewPublisher extends RRSConnectRunnable.ConnectListener {
                 mPublisherConfig.mKey,
                 mPublisherConfig.mSn,
                 mPublisherConfig.mDesc,
+                mSettingConfig.mServiceName,
+                mSettingConfig.mServiceProvider,
                 this, callback);
 
         mConnectRunnable.start();

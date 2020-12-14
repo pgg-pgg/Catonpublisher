@@ -111,7 +111,7 @@ void mpegwrite(void *param, const void *packet, size_t bytes) {
 }
 
 
-int Open(int state, const char *ip, int port) {
+int Open(int state, const char *ip, int port, const char *service_provider, const char* service_name) {
 
     send_state = state;
 
@@ -146,7 +146,7 @@ int Open(int state, const char *ip, int port) {
 
     void *param;
 
-    ts_enc_context = mpeg_ts_create(&h, param);
+    ts_enc_context = mpeg_ts_create(&h, param, service_provider, service_name);
     if (ts_enc_context == NULL) {
         LOGE("Open:ts_enc_context == NULL");
         return -1;

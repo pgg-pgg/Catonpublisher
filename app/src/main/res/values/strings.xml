@@ -21,6 +21,8 @@
     <string name="no">No</string>
     <string name="show_danmu">Text Overlay</string>
     <string name="danmu_content">Overlay Text</string>
+    <string name="service_provider">Service Provider</string>
+    <string name="service_name">Service Name</string>
     <string name="text_store">Save</string>
     <string name="live_name">Broadcast Name</string>
     <string name="live_title">Live</string>

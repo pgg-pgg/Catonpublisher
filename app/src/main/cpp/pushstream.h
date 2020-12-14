@@ -36,7 +36,7 @@ typedef enum ERROR_NUM{
     SESSION_ERROR,
 };
 
-int Open(int state,const char* ip,int port);
+int Open(int state,const char* ip,int port, const char *service_provider, const char *service_name);
 
 int Connect(const char *host, int port, int auth, int encrypt, const char *strkey, const char *sn,const char *desc);
 

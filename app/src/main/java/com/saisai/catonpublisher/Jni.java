@@ -83,7 +83,7 @@ public class Jni {
      * @param key
      * @return
      */
-    public native int connect(String host, int port, int auth, int encrypt, String key, String sn, String desc);
+    public native int connect(String host, int port, int auth, int encrypt, String key, String sn, String desc, String service_provider, String service_name);
 
     /**
      * 将一帧数据推向服务器

@@ -9,6 +9,7 @@ import android.media.ExifInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -40,6 +41,8 @@ import java.util.ArrayList;
 public class SettingFragment extends Fragment implements View.OnClickListener {
 
     private EditText mEditCaptions;
+    private EditText mEditServiceProvider;
+    private EditText mEditServiceName;
     private RadioGroup mRgCountDown;
     private RadioGroup mRgCover;
     private RadioGroup mRgShowTime;
@@ -57,6 +60,8 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
         mEditCaptions = view.findViewById(R.id.edit_danmu);
+        mEditServiceProvider = view.findViewById(R.id.edit_service_provider);
+        mEditServiceName = view.findViewById(R.id.edit_service_name);
         mRgCountDown = view.findViewById(R.id.rg_count_down);
         mRgCover = view.findViewById(R.id.rg_cover);
         mRgShowTime = view.findViewById(R.id.rg_show_time);
@@ -110,6 +115,8 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
             mRgShowTime.check(mSettingConfig.isShowTime ? R.id.rb_show_time_yes : R.id.rb_show_time_no);
             mRgShowCaptions.check(mSettingConfig.isShowDanmu ? R.id.rb_show_danmu_yes : R.id.rb_show_danmu_no);
             mEditCaptions.setText(mSettingConfig.danmuText);
+            mEditServiceName.setText(mSettingConfig.mServiceName);
+            mEditServiceProvider.setText(mSettingConfig.mServiceProvider);
         }
         mRgCover.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -179,6 +186,16 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         mSettingConfig.isShowTime = getCheckId(mRgShowTime) == R.id.rb_show_time_yes;
         mSettingConfig.isShowDanmu = getCheckId(mRgShowCaptions) == R.id.rb_show_danmu_yes;
         mSettingConfig.danmuText = mEditCaptions.getText().toString();
+        String serviceName = mEditServiceName.getText().toString();
+        String serviceProvider = mEditServiceProvider.getText().toString();
+        if (TextUtils.isEmpty(serviceName)) {
+            serviceName = "Caton";
+        }
+        if (TextUtils.isEmpty(serviceProvider)) {
+            serviceProvider = "CatonProvider";
+        }
+        mSettingConfig.mServiceName = serviceName;
+        mSettingConfig.mServiceProvider = serviceProvider;
         mSettingConfig.base64 = base64;
         SPUtils.saveSetting(mSettingConfig);
     }

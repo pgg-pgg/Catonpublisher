@@ -16,6 +16,7 @@ add_library( # Sets the name of the library.
              src/main/cpp/mpegts/mpeg-ts-h264.c
              src/main/cpp/mpegts/mpeg-ts-h265.c
              src/main/cpp/mpegts/mpeg-pat.c
+             src/main/cpp/mpegts/mpeg-sdt.c
              src/main/cpp/mpegts/mpeg-pmt.c
              src/main/cpp/mpegts/mpeg-util.c
              src/main/cpp/mpegts/crc32.c

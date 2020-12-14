@@ -69,6 +69,35 @@ struct pmt_t
 	struct pes_t streams[16];
 };
 
+struct service_desc_t
+{
+	unsigned int dtag;    // descriptor_tag  8bit
+	unsigned int dlength;  // descriptor_length   8bit
+	unsigned int stype;       // service_type       8 bit
+	unsigned int spnlength;    // service_provider_name_length    8bit
+	unsigned int snlength; // service_name_length 8bit
+
+	unsigned char spname[64];  // service_provider_name char
+	unsigned char sname[64];   // service_name    char
+};
+
+struct service_t
+{
+	unsigned int sid;     // service_id
+	unsigned int rstatus;  // runnging_status
+	unsigned int dllength; // descriptors_loop_length
+	struct service_desc_t sdesc[4];
+};
+
+struct sdt_t
+{
+	unsigned int tsid;
+	unsigned int ver;
+	unsigned int cc;   //continuity_counter : 4;
+
+	struct service_t desc[4];
+};
+
 struct pat_t
 {
 	unsigned int tsid;	// transport_stream_id : 16;
@@ -76,10 +105,11 @@ struct pat_t
 	unsigned int cc;	//continuity_counter : 4;
 
 	unsigned int pmt_count;
+	struct sdt_t sdt;
 	struct pmt_t pmts[4];
 };
 
-// Table 2-3 ¨C PID table(p36)
+// Table 2-3 ï¿½C PID table(p36)
 enum ETS_PID
 {
 	TS_PID_PAT	= 0x00, // program association table
@@ -93,25 +123,26 @@ enum ETS_PID
 };
 
 // 2.4.4.4 Table_id assignments
-// Table 2-31 ¨C table_id assignment values(p66/p39)
+// Table 2-31 ï¿½C table_id assignment values(p66/p39)
 enum EPAT_TID
 {
 	PAT_TID_PAS				= 0x00, // program_association_section
 	PAT_TID_CAS				= 0x01, // conditional_access_section(CA_section)
 	PAT_TID_PMS				= 0x02, // TS_program_map_section
-	PAT_TID_SDS				= 0x03, // TS_description_section
+	PAT_TID_TSDS			= 0x03, // TS_description_section
 	PAT_TID_MPEG4_scene		= 0x04, // ISO_IEC_14496_scene_description_section
 	PAT_TID_MPEG4_object	= 0x05, // ISO_IEC_14496_object_descriptor_section
 	PAT_TID_META			= 0x06, // Metadata_section
 	PAT_TID_IPMP			= 0x07, // IPMP_Control_Information_section(defined in ISO/IEC 13818-11)
 	PAT_TID_H222			= 0x08, // Rec. ITU-T H.222.0 | ISO/IEC 13818-1 reserved
 	PAT_TID_USER			= 0x40,	// User private
+	PAT_TID_SDS				= 0x42, // Service Description Section
 	PAT_TID_Forbidden		= 0xFF,
 };
 
 // ISO/IEC 13818-1:2015 (E)
 // 2.4.4.9 Semantic definition of fields in transport stream program map section
-// Table 2-34 ¨C Stream type assignments(p69)
+// Table 2-34 ï¿½C Stream type assignments(p69)
 enum EPSI_STREAM_TYPE
 {
 	PSI_STREAM_RESERVED			= 0x00, // ITU-T | ISO/IEC Reserved
@@ -173,5 +204,6 @@ size_t pat_read(struct pat_t *pat, const uint8_t* data, size_t bytes);
 size_t pat_write(const struct pat_t *pat, uint8_t *data);
 size_t pmt_read(struct pmt_t *pmt, const uint8_t* data, size_t bytes);
 size_t pmt_write(const struct pmt_t *pmt, uint8_t *data);
-
+size_t sdt_read(struct pat_t *pat, const uint8_t* data, size_t bytes);
+size_t sdt_write(const struct pat_t *pat, uint8_t *data);
 #endif /* !_mpeg_ts_proto_h_ */

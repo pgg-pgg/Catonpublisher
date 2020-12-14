@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:background="#ffffff"
     tools:context=".activity.Camera2Activity">
 
@@ -11,7 +12,7 @@
         android:id="@+id/iv_logo"
         android:layout_width="150dp"
         android:layout_height="50dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="36dp"
         android:src="@drawable/top_icon"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"

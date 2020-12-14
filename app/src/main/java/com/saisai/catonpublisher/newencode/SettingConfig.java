@@ -12,4 +12,6 @@ public class SettingConfig implements Serializable {
     public boolean isShowDanmu = true;
     public String danmuText = "";
     public String base64 = "";
+    public String mServiceProvider = "Caton";
+    public String mServiceName = "CatonPublisher";
 }
